@@ -21,6 +21,33 @@ public class ExcelWriter {
         // Get iterator to all the rows in current sheet
         Iterator<Row> rowIterator = mySheet.iterator();
 
+        // Traversing over each row of XLSX file
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+
+            // For each row, iterate through each columns
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+
+                Cell cell = cellIterator.next();
+
+                switch (cell.getCellType()) {
+                    case Cell.CELL_TYPE_STRING:
+                        System.out.print(cell.getStringCellValue() + "\t");
+                        break;
+                    case Cell.CELL_TYPE_NUMERIC:
+                        System.out.print(cell.getNumericCellValue() + "\t");
+                        break;
+                    case Cell.CELL_TYPE_BOOLEAN:
+                        System.out.print(cell.getBooleanCellValue() + "\t");
+                        break;
+                    default :
+
+                }
+            }
+            System.out.println("");
+        }
+
         // Now, let's write some data into our XLSX file
         Map<String, Object[]> data = new HashMap<String, Object[]>();
         data.put("7", new Object[] {7d, "Sonya", "75K", "SALES", "Rupert"});
