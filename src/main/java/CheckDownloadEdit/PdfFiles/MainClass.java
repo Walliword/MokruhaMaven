@@ -1,9 +1,11 @@
+package CheckDownloadEdit.PdfFiles;
+
+import CheckDownloadEdit.FilesUtil;
+
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,20 +43,7 @@ public class MainClass {
         }
     }
 
-    public static boolean exists(String URLName) {
-        try {
-            HttpURLConnection.setFollowRedirects(false);
-            // note : you may also need
-            //        HttpURLConnection.setInstanceFollowRedirects(false)
-            HttpURLConnection con =
-                    (HttpURLConnection) new URL(URLName).openConnection();
-            con.setRequestMethod("HEAD");
-            return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+
 
     private static Path downloadExistingFiles(String urlString, Path downloadDirectory) throws IOException {
         URL url = new URL(urlString);
@@ -79,7 +68,7 @@ public class MainClass {
                     builder.append(0);
                 builder.append(j).append("-20").append(i).append(".pdf");
                 String urlName = builder.toString();
-                if (exists(urlName)) {
+                if (FilesUtil.exists(urlName)) {
                     pdfs.add(urlName);
                 }
             }

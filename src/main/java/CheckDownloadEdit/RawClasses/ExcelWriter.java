@@ -1,3 +1,5 @@
+package CheckDownloadEdit.RawClasses;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -42,7 +44,7 @@ public class ExcelWriter {
                         System.out.print(cell.getBooleanCellValue() + "\t");
                         break;
                     default :
-
+                        System.out.println("unknown cell type");
                 }
             }
             System.out.println("");
