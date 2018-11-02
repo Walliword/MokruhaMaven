@@ -1,5 +1,6 @@
 package CheckDownloadEdit.PdfFiles;
 
+import CheckDownloadEdit.FilesUtil;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
@@ -19,7 +20,7 @@ import java.util.*;
 
 public class SimpleTextExtractor {
 
-    private static String dest = "C:\\Users\\Wallian\\IdeaProjects\\MokruhaMaven\\pdfs\\oper-03-2018.pdf";
+    private static String dest = "C:\\Users\\Vallian\\IdeaProjects\\MokruhaMaven\\pdfs\\oper-05-2018.pdf";
     public static Map<String, Double> excelTransfer = new LinkedHashMap<>();
     public static int nalog = 0;
 
@@ -33,7 +34,7 @@ public class SimpleTextExtractor {
     }
 
     private static void excelExtractor() throws IOException {
-        FileInputStream fsIP= new FileInputStream(new File("C:\\Users\\Wallian\\IdeaProjects\\MokruhaMaven\\pdfs\\MOKRUHA Eternal.xlsx")); //Read the spreadsheet that needs to be updated
+        FileInputStream fsIP= new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL)); //Read the spreadsheet that needs to be updated
 
         XSSFWorkbook wb = new XSSFWorkbook(fsIP); //Access the workbook
 //страница
@@ -47,7 +48,7 @@ public class SimpleTextExtractor {
         style.setBorderRight(BorderStyle.THIN);
         for (int i = 1; i < 24; i++) {
             //cell = worksheet.getRow(i+1).createCell(6);
-            cell1 = worksheet.getRow(i+1).createCell(8);
+            cell1 = worksheet.getRow(i+1).createCell(9);
             cell1.setCellStyle(style);
 //            if (i==2) {
 //                XSSFCellStyle style1 = style;
@@ -65,7 +66,7 @@ public class SimpleTextExtractor {
 
         fsIP.close(); //Close the InputStream
 
-        FileOutputStream output_file =new FileOutputStream(new File("C:\\Users\\Wallian\\IdeaProjects\\MokruhaMaven\\pdfs\\MOKRUHA Eternal.xlsx"));  //Open FileOutputStream to write updates
+        FileOutputStream output_file =new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));  //Open FileOutputStream to write updates
 
         wb.write(output_file); //write changes
 
@@ -83,14 +84,14 @@ public class SimpleTextExtractor {
             String text = PdfTextExtractor.getTextFromPage(reader, i, strategy);
             String[] test = text.split("\n");
             for (int j = 0; j < test.length; j++) {
-                if (nalog==2) break;
+                if (nalog==1) break;
 
                 if (test[j].startsWith("Валовой внутренний")) {
                     System.out.println(test[j - 1]);
                     String s = (test[j].trim() + test[j + 1]).replaceAll("[\\s]{2,}", " ");
                     System.out.println(j + s);
                     if (isExactYear())
-                    excelTransfer.put("ВВП",getNumber(s, 3));
+                    excelTransfer.put("ВВП",getNumber(s, 0));
                 }
                 if (test[j].startsWith("Валовая добавленная")) {
                     String s = (test[j].trim() + test[j + 1] + test[j + 2]).replaceAll("[\\s]{2,}", " ");
@@ -258,7 +259,7 @@ public class SimpleTextExtractor {
     }
 
     private static int getPosition() {
-        return 3;
+        return 0;
     }
 
 //    private static void getNumbers(String s) {
@@ -277,7 +278,7 @@ public class SimpleTextExtractor {
     }
 
     private static boolean isExactYear() {
-        return nalog ==1;
+        return nalog ==0;
     }
 
     public static List<String> getKeys() {
