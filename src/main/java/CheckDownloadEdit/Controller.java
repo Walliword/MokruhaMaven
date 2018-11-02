@@ -1,5 +1,6 @@
 package CheckDownloadEdit;
 
+import CheckDownloadEdit.ExcelFiles.Demography;
 import CheckDownloadEdit.ExcelFiles.Inflation;
 import CheckDownloadEdit.PdfFiles.GrossDomesticProduct;
 
@@ -9,5 +10,7 @@ public class Controller {
         inflation.makeMagic();
         GrossDomesticProduct product = new GrossDomesticProduct();
         product.makeMagic();
+        Demography demography = new Demography();
+        demography.makeMagic();
     }
 }

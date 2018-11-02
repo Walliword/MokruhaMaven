@@ -9,7 +9,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 
 public class FilesUtil {
 
@@ -44,7 +46,7 @@ public class FilesUtil {
      *
      * @return путь к директории
      */
-    public static Path createTempDirectory() {
+    private static Path createTempDirectory() {
         Path dirPath = Paths.get(DIRECTORY);
         if (!Files.exists(dirPath)) {
             try {
@@ -101,6 +103,16 @@ public class FilesUtil {
             System.out.println("Проблемы с удалением директории");
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Получает двузначное значение текущего года, используемое для автоматического смещения по строкам в таблицах
+     * @return возвращает год без тысяч
+     */
+    public static int getYear() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        return calendar.get(Calendar.YEAR) - 2000;
     }
 
 }

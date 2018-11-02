@@ -77,7 +77,7 @@ public class GrossDomesticProduct {
 
     private List<String> getUrlStrings() {
         List<String> pdfs = new ArrayList<>();
-        int year = getYear();
+        int year = FilesUtil.getYear();
         int[] months = new int[]{3, 5, 8, 11};
         for (int i = 0; i < 4; i++) {
             StringBuilder builder = new StringBuilder();
@@ -96,12 +96,6 @@ public class GrossDomesticProduct {
         return pdfs;
     }
 
-    private int getYear() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        return calendar.get(Calendar.YEAR) - 2000;
-    }
-
     private double getNumber(String s, int position) {
         String a = s.replaceAll("[A-Za-zА-Яа-я;]", "").trim().replaceAll(",", ".");
         String numberString = (a.split(" ")[position]);
@@ -109,7 +103,7 @@ public class GrossDomesticProduct {
     }
 
     private int getCellNumber() {
-        return 7 + (getYear() - 18) * 4 + pdfSize;
+        return 7 + (FilesUtil.getYear() - 18) * 4 + pdfSize;
     }
 
     private int limitNalog() {
