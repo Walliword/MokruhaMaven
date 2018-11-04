@@ -27,8 +27,8 @@ public class Inflation {
                 XSSFSheet worksheetMKR = wbMKR.getSheetAt(2); //Access the worksheet, so that we can update / modify it.
                 XSSFSheet worksheetF = wbF.getSheetAt(0);
                 //ячейки с числами
-                Cell cellMKR = null; // declare a Cell object
-                Cell cellF = null;
+                Cell cellMKR; // declare a Cell object
+                Cell cellF;
                 //листы для тестов
                 ArrayList<Double> listD = new ArrayList<>();
                 ArrayList<String> listS = new ArrayList<>();

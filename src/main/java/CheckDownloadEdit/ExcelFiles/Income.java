@@ -38,29 +38,35 @@ public class Income {
                 style.setBorderBottom(BorderStyle.THIN);
 
                 //проверка наличия данных
-                cellIN = worksheetIN.getRow(51 + (FilesUtil.getYear()-16)*6).getCell(1);
-                if (cellIN.getCellType() == Cell.CELL_TYPE_STRING) {
-                    //год
-                    cellMKR = worksheetMKR.getRow(51 + (FilesUtil.getYear()-16)*6).createCell(1);
-                    cellMKR.setCellValue(cellIN.getStringCellValue());
-                    //рабочий цикл
-                    for (int r = 0; r < 5; r++) {
-                        for (int c = 0; c < 7; c++) {
-                            cellMKR = worksheetMKR.getRow(51 + (FilesUtil.getYear()-16)*6 + 1 + r).createCell(1+c);
-                            cellIN = worksheetIN.getRow(51 + (FilesUtil.getYear()-16)*6 + 1 + r).getCell(1+c);
-                            cellMKR.setCellStyle(style);
-                            if (cellIN.getCellType() == Cell.CELL_TYPE_STRING) {
-                                cellMKR.setCellValue(cellIN.getStringCellValue());
-                            }
-                            if (cellIN.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-                                cellMKR.setCellValue(cellIN.getNumericCellValue());
+                if ((cellIN = worksheetIN.getRow(51 + (FilesUtil.getYear()-16)*6).getCell(1)) != null &&
+                        (cellIN.getCellType() == Cell.CELL_TYPE_STRING)) {
+                    if ((cellMKR = worksheetMKR.getRow(51 + (FilesUtil.getYear() - 16) * 6).getCell(1)) != null &&
+                            cellIN.getStringCellValue().equals(cellMKR.getStringCellValue())) {
+                        System.out.println("Данные по доходам за текущий год уже добавлены");
+                    }
+                    else {
+                        //год
+                        cellMKR = worksheetMKR.getRow(51 + (FilesUtil.getYear() - 16) * 6).createCell(1);
+                        cellMKR.setCellValue(cellIN.getStringCellValue());
+                        //рабочий цикл
+                        for (int r = 0; r < 5; r++) {
+                            for (int c = 0; c < 7; c++) {
+                                cellMKR = worksheetMKR.getRow(51 + (FilesUtil.getYear() - 16) * 6 + 1 + r).createCell(1 + c);
+                                cellIN = worksheetIN.getRow(51 + (FilesUtil.getYear() - 16) * 6 + 1 + r).getCell(1 + c);
+                                cellMKR.setCellStyle(style);
+                                if (cellIN.getCellType() == Cell.CELL_TYPE_STRING) {
+                                    cellMKR.setCellValue(cellIN.getStringCellValue());
+                                }
+                                if (cellIN.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                                    cellMKR.setCellValue(cellIN.getNumericCellValue());
+                                }
                             }
                         }
+                        FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
+                        wbMKR.write(mokruha);
+                        mokruha.close();
+                        System.out.println("Редактирование страницы Доходы завершено");
                     }
-                    FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
-                    wbMKR.write(mokruha);
-                    mokruha.close();
-                    System.out.println("Редактирование страницы Доходы завершено");
                 }
                 else {
                     System.out.println("Данных по доходам за предыдущий год ещё не поступило");

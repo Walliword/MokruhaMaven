@@ -1,4 +1,4 @@
-package CheckDownloadEdit.PdfFiles;
+package CheckDownloadEdit.RawClasses;
 
 import CheckDownloadEdit.FilesUtil;
 
