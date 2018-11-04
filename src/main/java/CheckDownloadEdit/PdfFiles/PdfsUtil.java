@@ -38,7 +38,7 @@ public class PdfsUtil {
         return pdfs;
     }
 
-    public static double getNumber(String s, int position) {
+    static double getNumber(String s, int position) {
         String a = s.replaceAll("[A-Za-zА-Яа-я;]", "").trim().replaceAll(",", ".");
         String numberString = (a.split(" ")[position]);
         return Double.parseDouble(numberString);

@@ -18,20 +18,21 @@ public class GrossDomesticProduct {
 
     private static int nalog = 0;
     private static int pdfSize = 0;
+    private static int[] months = new int[]{3, 5, 8, 11};
 
-    //сбор ссылки по частям
-    private static final String PART1 = "http://www.gks.ru/free_doc/doc_20";
-    //здесь год
-    private static final String PART2 = "/info/oper-";
-    //здесь месяц
-    private static final String PART3 = "-20";
-    //и снова год
-    private static final String PART4 = ".pdf";
+//    //сбор ссылки по частям
+//    private static final String PART1 = "http://www.gks.ru/free_doc/doc_20";
+//    //здесь год
+//    private static final String PART2 = "/info/oper-";
+//    //здесь месяц
+//    private static final String PART3 = "-20";
+//    //и снова год
+//    private static final String PART4 = ".pdf";
 
 
 
     public void makeMagic() {
-        List<String> check = getUrlStrings();
+        List<String> check = PdfsUtil.getUrlStrings(months);
         if (check.size() == 0) {
             System.out.println("Нет данных по ВВП для текущего года");
         } else {
@@ -75,26 +76,25 @@ public class GrossDomesticProduct {
     }
 
 
-    private List<String> getUrlStrings() {
-        List<String> pdfs = new ArrayList<>();
-        int year = FilesUtil.getYear();
-        int[] months = new int[]{3, 5, 8, 11};
-        for (int i = 0; i < 4; i++) {
-            StringBuilder builder = new StringBuilder();
-            builder.append(PART1).append(year).append(PART2);
-            if (months[i] < 10) {
-                builder.append(0);
-            }
-            builder.append(months[i]).append(PART3).append(year).append(PART4);
-            String urlName = builder.toString();
-            if (FilesUtil.exists(urlName)) {
-                pdfs.add(urlName);
-            }
-        }
-        //от количества ссылок будем отталкиваться
-        pdfSize = pdfs.size();
-        return pdfs;
-    }
+//    private List<String> getUrlStrings() {
+//        List<String> pdfs = new ArrayList<>();
+//        int year = FilesUtil.getYear();
+//        for (int i = 0; i < 4; i++) {
+//            StringBuilder builder = new StringBuilder();
+//            builder.append(PART1).append(year).append(PART2);
+//            if (months[i] < 10) {
+//                builder.append(0);
+//            }
+//            builder.append(months[i]).append(PART3).append(year).append(PART4);
+//            String urlName = builder.toString();
+//            if (FilesUtil.exists(urlName)) {
+//                pdfs.add(urlName);
+//            }
+//        }
+//        //от количества ссылок будем отталкиваться
+//        pdfSize = pdfs.size();
+//        return pdfs;
+//    }
 
     private double getNumber(String s, int position) {
         String a = s.replaceAll("[A-Za-zА-Яа-я;]", "").trim().replaceAll(",", ".");

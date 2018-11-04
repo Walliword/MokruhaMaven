@@ -5,15 +5,15 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class Trade {
 
@@ -23,17 +23,51 @@ public class Trade {
 
 
     public static void main(String[] args) {
-       // System.out.println(PdfsUtil.getUrlStrings(months));
        // System.out.println(PdfsUtil.pdfSize);
-        getValues();
-        System.out.println(getMonth());
+        //System.out.println(Arrays.toString(getValues("C:\\Users\\Vallian\\IdeaProjects\\MokruhaMaven\\pdfs\\oper-09-2018.pdf")));
+        //System.out.println(getMonth());
+        makeMagic();
     }
 
-    public static void getValues() {
-        List<Double> values = new LinkedList<>();
+    public static void makeMagic() {
+        List<String> check = PdfsUtil.getUrlStrings(months);
+        if (check.size() == 0) {
+            System.out.println("Нет данных по Торговле для текущего года");
+        } else {
+            System.out.println("Обновляю страницу Торговля..");
+            File file = FilesUtil.downloadFile(check.get(PdfsUtil.pdfSize - 1));
+            assert file != null;
 
-        try {
-            PdfReader reader = new PdfReader("C:\\Users\\Vallian\\IdeaProjects\\MokruhaMaven\\pdfs\\oper-09-2018.pdf");
+            try (FileInputStream fsIP = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
+                 XSSFWorkbook wb = new XSSFWorkbook(fsIP)) {
+                XSSFSheet worksheet = wb.getSheetAt(6); //Access the worksheet, so that we can update / modify it.
+                double[] values = getValues(file.getAbsolutePath());
+                //System.out.println(Arrays.toString(values));
+
+                Cell cell1;
+                Cell cell2;
+                cell1 = worksheet.getRow(121 + (FilesUtil.getYear()-17)*13 + getMonth()).createCell(2);
+                cell2 = worksheet.getRow(121 + (FilesUtil.getYear()-17)*13 + getMonth()).createCell(3);
+                cell1.setCellValue(values[0]);
+                cell2.setCellValue(values[1]);
+
+                fsIP.close(); //Close the InputStream
+                //Open FileOutputStream to write updates
+                FileOutputStream output_file = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
+                wb.write(output_file); //write changes
+                output_file.close();  //close the stream
+
+                System.out.println("Редактирование страницы ВВП завершено");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static double[] getValues(String filePath) throws IOException {
+        double[] values = new double[2];
+
+            PdfReader reader = new PdfReader(filePath);
             for (int i = 51; i <=75; ++i) {
                 TextExtractionStrategy strategy = new SimpleTextExtractionStrategy();
                 String text = PdfTextExtractor.getTextFromPage(reader, i, strategy);
@@ -57,30 +91,36 @@ public class Trade {
 //                        System.out.println(i);
                         year++;
                     }
-                    if (test[i].trim().startsWith(getMonth())) {
+                    //получаем месяц
+                    if (test[i].trim().startsWith(getMonthName()+" ")) {
                         if (year == 2) {
                             System.out.println(test[i]);
                             System.out.println(j);
                             System.out.println(PdfsUtil.getNumber(test[i], 0));
-                            //PdfsUtil.getNumber(test[i], 0);
+                            values[0] = PdfsUtil.getNumber(test[i], 0);
                             System.out.println(PdfsUtil.getNumber(test[i], 3));
-                            //PdfsUtil.getNumber(test[i], 3);
+                            values[1] = PdfsUtil.getNumber(test[i], 3);
                         }
                     }
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            // убираем за собой
+            reader.close();
+            //возвращаем массив значений
+            return values;
     }
 
     public static int getPage() {
         return 4;
     }
 
-    public static String getMonth() {
+    public static int getMonth() {
         LocalDate today = LocalDate.now();
-        Month month = Month.of(today.getMonthValue()-2);
+        return today.getMonthValue()-10;
+    }
+
+    public static String getMonthName() {
+        Month month = Month.of(getMonth());
         Locale loc = Locale.forLanguageTag("ru");
         return month.getDisplayName(TextStyle.FULL_STANDALONE, loc);
     }
