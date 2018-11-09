@@ -1,4 +1,4 @@
-package CheckDownloadEdit.ExcelFiles.inProgress;
+package CheckDownloadEdit.inProgress;
 
 public class PrivateOutflow {
 
