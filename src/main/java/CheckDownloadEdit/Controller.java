@@ -6,6 +6,7 @@ import CheckDownloadEdit.ExcelFiles.Income;
 import CheckDownloadEdit.ExcelFiles.Inflation;
 import CheckDownloadEdit.PdfFiles.GrossDomesticProduct;
 import CheckDownloadEdit.PdfFiles.Trade;
+import CheckDownloadEdit.MixedFiles.FNB;
 
 public class Controller {
     public static void main(String[] args) {
@@ -15,5 +16,6 @@ public class Controller {
         new Income().makeMagic();
         new Debt().makeMagic();
         new Trade().makeMagic();
+        new FNB().makeMagic();
     }
 }
