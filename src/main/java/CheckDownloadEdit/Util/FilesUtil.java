@@ -1,4 +1,4 @@
-package CheckDownloadEdit;
+package CheckDownloadEdit.Util;
 
 import java.io.File;
 import java.io.IOException;
@@ -73,7 +73,7 @@ public class FilesUtil {
                 URL url = new URL(URLName);
                 String filename = URLName.substring(URLName.lastIndexOf('/') + 1, URLName.lastIndexOf('.'));
                 String suffix = URLName.substring(URLName.lastIndexOf('.'));
-                InputStream inputStream = null;
+                InputStream inputStream;
                 inputStream = url.openStream();
                 Path tempFile = Files.createTempFile(filename, suffix);
                 Files.copy(inputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);

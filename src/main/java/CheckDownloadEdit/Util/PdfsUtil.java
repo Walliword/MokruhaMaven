@@ -1,6 +1,4 @@
-package CheckDownloadEdit.PdfFiles;
-
-import CheckDownloadEdit.FilesUtil;
+package CheckDownloadEdit.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,7 @@ public class PdfsUtil {
     //и снова год
     private static final String PART4 = ".pdf";
 
-    static List<String> getUrlStrings(int[] months) {
+    public static List<String> getUrlStrings(int[] months) {
         List<String> pdfs = new ArrayList<>();
         int year = FilesUtil.getYear();
         for (int month : months) {
@@ -38,7 +36,7 @@ public class PdfsUtil {
         return pdfs;
     }
 
-    static double getNumber(String s, int position) {
+    public static double getNumber(String s, int position) {
         String a = s.replaceAll("[A-Za-zА-Яа-я;]", "").trim().replaceAll(",", ".");
         String numberString = (a.split(" ")[position]);
         return Double.parseDouble(numberString);

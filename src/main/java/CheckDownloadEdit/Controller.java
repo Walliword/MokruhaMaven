@@ -1,9 +1,6 @@
 package CheckDownloadEdit;
 
-import CheckDownloadEdit.ExcelFiles.Debt;
-import CheckDownloadEdit.ExcelFiles.Demography;
-import CheckDownloadEdit.ExcelFiles.Income;
-import CheckDownloadEdit.ExcelFiles.Inflation;
+import CheckDownloadEdit.ExcelFiles.*;
 import CheckDownloadEdit.PdfFiles.GrossDomesticProduct;
 import CheckDownloadEdit.PdfFiles.Trade;
 import CheckDownloadEdit.MixedFiles.FNB;
@@ -17,5 +14,6 @@ public class Controller {
         new Debt().makeMagic();
         new Trade().makeMagic();
         new FNB().makeMagic();
+        new PrivateOutflow().makeMagic();
     }
 }

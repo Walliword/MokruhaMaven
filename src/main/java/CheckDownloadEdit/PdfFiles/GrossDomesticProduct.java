@@ -1,6 +1,7 @@
 package CheckDownloadEdit.PdfFiles;
 
-import CheckDownloadEdit.FilesUtil;
+import CheckDownloadEdit.Util.FilesUtil;
+import CheckDownloadEdit.Util.PdfsUtil;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;

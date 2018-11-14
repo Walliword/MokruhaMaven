@@ -1,6 +1,6 @@
 package CheckDownloadEdit.RawClasses;
 
-import CheckDownloadEdit.FilesUtil;
+import CheckDownloadEdit.Util.FilesUtil;
 
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;

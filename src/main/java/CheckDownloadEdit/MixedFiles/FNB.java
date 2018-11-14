@@ -1,8 +1,8 @@
 package CheckDownloadEdit.MixedFiles;
 
 
-import CheckDownloadEdit.FilesUtil;
-import CheckDownloadEdit.HtmlUtil;
+import CheckDownloadEdit.Util.FilesUtil;
+import CheckDownloadEdit.Util.HtmlUtil;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;

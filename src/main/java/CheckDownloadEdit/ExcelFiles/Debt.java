@@ -1,9 +1,8 @@
 package CheckDownloadEdit.ExcelFiles;
 
-import CheckDownloadEdit.FilesUtil;
+import CheckDownloadEdit.Util.FilesUtil;
+import CheckDownloadEdit.Util.XlsxUtil;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -12,7 +11,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Iterator;
 
 public class Debt {
 
@@ -52,14 +50,7 @@ public class Debt {
                                 style.cloneStyleFrom(cellF.getCellStyle());
                                 cellMKR.setCellStyle(style);
 
-                                switch (cellF.getCellType()) {
-                                    case Cell.CELL_TYPE_STRING:
-                                        cellMKR.setCellValue(cellF.getStringCellValue());
-                                        break;
-                                    case Cell.CELL_TYPE_NUMERIC:
-                                        cellMKR.setCellValue(cellF.getNumericCellValue());
-                                        break;
-                                }
+                                XlsxUtil.fillCells(cellF, cellMKR);
                             }
                         }
                     }
