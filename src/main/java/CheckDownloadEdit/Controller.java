@@ -4,7 +4,8 @@ import CheckDownloadEdit.ExcelFiles.*;
 import CheckDownloadEdit.PdfFiles.GrossDomesticProduct;
 import CheckDownloadEdit.PdfFiles.Trade;
 import CheckDownloadEdit.MixedFiles.FNB;
-import CheckDownloadEdit.inProgress.ExtTrade;
+import CheckDownloadEdit.ExcelFiles.ExtTrade;
+import CheckDownloadEdit.HtmlFiles.DepositsF;
 
 public class Controller {
     public static void main(String[] args) {
@@ -18,5 +19,6 @@ public class Controller {
         new PrivateOutflow().makeMagic();
         new PayBalance().makeMagic();
         new ExtTrade().makeMagic();
+        new DepositsF().makeMagic();
     }
 }

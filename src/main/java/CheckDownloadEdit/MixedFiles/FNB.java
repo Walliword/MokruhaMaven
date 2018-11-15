@@ -102,7 +102,7 @@ public class FNB {
         }
     }
 
-    private static String[] getDocxInfo() throws IOException {
+    private String[] getDocxInfo() throws IOException {
         File file = FilesUtil.downloadFile(LINK1);
         if (file == null) {
             System.out.println("Данного docx файла для страницы ФНБ/М2/ЗВР не существует");
@@ -119,8 +119,8 @@ public class FNB {
     }
 
 
-    private static List<String[]> getHtmlInfo() throws IOException {
-        Elements links = HtmlUtil.getElements(LINK2);
+    private List<String[]> getHtmlInfo() throws IOException {
+        Elements links = HtmlUtil.getElementsByTr(LINK2);
         List<String[]> list = new LinkedList<>();
         for (Element link : links) {
             String[] line = new String[7];
@@ -139,7 +139,7 @@ public class FNB {
         return list;
     }
 
-    private static List<Cell> getExcelInfo() {
+    private List<Cell> getExcelInfo() {
         File file = FilesUtil.downloadFile(LINK3);
         List<Cell> cells = new ArrayList<>();
         if (file == null) {
