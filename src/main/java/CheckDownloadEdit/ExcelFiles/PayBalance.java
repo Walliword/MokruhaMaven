@@ -18,7 +18,7 @@ public class PayBalance {
     public void makeMagic() {
         File file = FilesUtil.downloadFile(LINK);
         if (file == null) {
-            System.out.println("Файл для вывоза капитала частным сектором отсутствует.");
+            System.out.println("Файл для страницы Платежный баланс отсутствует.");
         } else {
             copyCells(file);
         }
@@ -46,8 +46,7 @@ public class PayBalance {
                         if (r == 78) {
                             r++;
                         }
-                        if (
-                                (cellF = worksheetF.getRow(r+2).getCell(c)) == null ||
+                        if ((cellF = worksheetF.getRow(r+2).getCell(c)) == null ||
                         worksheetF.getRow(r+2) == null ||
                         worksheetMKR.getRow(r) == null) {
                             break;
