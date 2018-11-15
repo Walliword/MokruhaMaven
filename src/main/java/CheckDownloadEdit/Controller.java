@@ -15,5 +15,6 @@ public class Controller {
         new Trade().makeMagic();
         new FNB().makeMagic();
         new PrivateOutflow().makeMagic();
+        new PayBalance().makeMagic();
     }
 }
