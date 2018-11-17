@@ -33,7 +33,7 @@ public class GrossDomesticProduct {
 
 
     public void makeMagic() {
-        List<String> check = PdfsUtil.getUrlStrings(months);
+        List<String> check = PdfsUtil.getUrlStrings(months, FilesUtil.getYear());
         if (check.size() == 0) {
             System.out.println("Нет данных по ВВП для текущего года");
         } else {

@@ -8,6 +8,7 @@ import CheckDownloadEdit.ExcelFiles.ExtTrade;
 import CheckDownloadEdit.HtmlFiles.DepositsF;
 import CheckDownloadEdit.HtmlFiles.Credits;
 import CheckDownloadEdit.HtmlFiles.DepositsNonF;
+import CheckDownloadEdit.PdfFiles.Transport;
 
 public class Controller {
     public static void main(String[] args) {
@@ -24,5 +25,6 @@ public class Controller {
         new DepositsF().makeMagic();
         new DepositsNonF().makeMagic();
         new Credits().makeMagic();
+        new Transport().makeMagic();
     }
 }

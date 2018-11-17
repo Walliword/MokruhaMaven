@@ -16,7 +16,7 @@ import java.util.Date;
 public class FilesUtil {
 
     private static final String DIRECTORY = "D:\\temp\\";
-    public static final String MOKRUHA_ETERNAL = "D:\\MKR_DIR\\Macro_data_1.0.xlsx";
+    public static final String MOKRUHA_ETERNAL = "D:\\MKR_DIR\\MOKRUHA Eternal.xlsx";
 
     /**
      * Проверка существования файла по ссылке - необходимо перед любым скачиванием

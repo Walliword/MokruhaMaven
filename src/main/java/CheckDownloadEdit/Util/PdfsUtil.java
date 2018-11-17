@@ -16,9 +16,8 @@ public class PdfsUtil {
     //и снова год
     private static final String PART4 = ".pdf";
 
-    public static List<String> getUrlStrings(int[] months) {
+    public static List<String> getUrlStrings(int[] months, int year) {
         List<String> pdfs = new ArrayList<>();
-        int year = FilesUtil.getYear();
         for (int month : months) {
             StringBuilder builder = new StringBuilder();
             builder.append(PART1).append(year).append(PART2);
@@ -37,7 +36,7 @@ public class PdfsUtil {
     }
 
     public static double getNumber(String s, int position) {
-        String a = s.replaceAll("[A-Za-zА-Яа-я;]", "").trim().replaceAll(",", ".");
+        String a = s.replaceAll("[A-Za-zА-Яа-я;()]", "").trim().replaceAll(",", ".");
         String numberString = (a.split(" ")[position]);
         return Double.parseDouble(numberString);
     }

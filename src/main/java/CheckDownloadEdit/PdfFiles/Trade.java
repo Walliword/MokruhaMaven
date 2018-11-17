@@ -21,7 +21,7 @@ public class Trade {
     private static int year = 0;
     private static int[] months = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
     private static int pageNumber = 0;
-    private static List<String> check = PdfsUtil.getUrlStrings(months);
+    private static List<String> check = PdfsUtil.getUrlStrings(months, FilesUtil.getYear());
 
 
     public void makeMagic() {
