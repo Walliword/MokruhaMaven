@@ -40,4 +40,15 @@ public class PdfsUtil {
         String numberString = (a.split(" ")[position]);
         return Double.parseDouble(numberString);
     }
+
+    public static int getPage(String contents, String search) {
+        String[] lines = contents.split("\n");
+        String page = "";
+        for (String line : lines) {
+            if (line.contains(search)) {
+                page = line.substring(10).replaceAll("[A-Za-zА-Яа-я;.,…]", "").trim();
+            }
+        }
+        return Integer.parseInt(page);
+    }
 }
