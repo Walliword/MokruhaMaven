@@ -1,9 +1,37 @@
 package CheckDownloadEdit.Util;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class PdfsUtil {
+
+    private static int year;
+    private static int month;
+
+    static {
+        LocalDate today = LocalDate.now();
+        int m = today.getMonthValue();
+        if (m == 1) {
+            year = FilesUtil.getYear() - 1;
+            month = 11;
+        }
+        else {
+            year = FilesUtil.getYear();
+            month = m - 2;
+        }
+    }
+
+    public static int getYear() {
+        return year;
+    }
+
+    public static int getMonth() {
+        return month;
+    }
 
     public static int pdfSize = 0;
 
@@ -50,5 +78,11 @@ public class PdfsUtil {
             }
         }
         return Integer.parseInt(page);
+    }
+
+    public static String getMonthName(int number) {
+        Month month = Month.of(number);
+        Locale loc = Locale.forLanguageTag("ru");
+        return month.getDisplayName(TextStyle.FULL_STANDALONE, loc);
     }
 }
