@@ -1,14 +1,12 @@
 package CheckDownloadEdit;
 
 import CheckDownloadEdit.ExcelFiles.*;
-import CheckDownloadEdit.PdfFiles.GrossDomesticProduct;
-import CheckDownloadEdit.PdfFiles.Trade;
+import CheckDownloadEdit.PdfFiles.*;
 import CheckDownloadEdit.MixedFiles.FNB;
 import CheckDownloadEdit.ExcelFiles.ExtTrade;
 import CheckDownloadEdit.HtmlFiles.DepositsF;
 import CheckDownloadEdit.HtmlFiles.Credits;
 import CheckDownloadEdit.HtmlFiles.DepositsNonF;
-import CheckDownloadEdit.PdfFiles.Transport;
 
 public class Controller {
     public static void main(String[] args) {
@@ -26,5 +24,8 @@ public class Controller {
         new DepositsNonF().makeMagic();
         new Credits().makeMagic();
         new Transport().makeMagic();
+        new Energy().makeMagic();
+        new Wage().makeMagic();
+        new InflationStructure().makeMagic();
     }
 }

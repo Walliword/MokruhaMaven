@@ -1,4 +1,4 @@
-package CheckDownloadEdit.inProgress;
+package CheckDownloadEdit.PdfFiles;
 
 import CheckDownloadEdit.Util.FilesUtil;
 import CheckDownloadEdit.Util.PdfsUtil;
@@ -20,24 +20,17 @@ import java.util.List;
 public class Wage {
 
 
-
     private static int[] months = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
     private static List<String> pdfs = PdfsUtil.getUrlStrings(months, PdfsUtil.getYear());
     private static int pdfSize = pdfs.size();
 
-    public static void main(String[] args) {
-        makeMagic();
-//        getNumbers(getRawLine()).forEach(System.out::println);
-    }
-
-    public static void makeMagic() {
+    public void makeMagic() {
         //ПОПРАВИТЬ
         if (pdfSize < PdfsUtil.getMonth() + 1) {
             System.out.println("Информации по Зарплате за " +
-                    PdfsUtil.getMonthName(PdfsUtil.getMonth()+1) +
+                    PdfsUtil.getMonthName(PdfsUtil.getMonth() + 1) +
                     " не поступало.");
-        }
-        else {
+        } else {
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
                 List<Double> data = getNumbers(getRawLine());
 
@@ -73,7 +66,7 @@ public class Wage {
         }
     }
 
-    private static String getRawLine() {
+    private String getRawLine() {
         int stopWord = 0;
         String rawLine = "";
         File file = FilesUtil.downloadFile(pdfs.get(pdfSize - 1));
@@ -94,7 +87,7 @@ public class Wage {
                     if (stopWord == 2) {
                         break;
                     }
-                    if (lines[j].trim().startsWith(PdfsUtil.getMonthName(PdfsUtil.getMonth()+1))
+                    if (lines[j].trim().startsWith(PdfsUtil.getMonthName(PdfsUtil.getMonth() + 1))
                             && !lines[j].contains("-")) {
                         if ((j + 1) < lines.length && lines[j + 1].endsWith(")")) {
                             System.out.println(lines[j + 2]);
@@ -114,7 +107,7 @@ public class Wage {
         return rawLine;
     }
 
-    private static List<Double> getNumbers(String rawLine) {
+    private List<Double> getNumbers(String rawLine) {
         List<Double> numbers = new ArrayList<>();
 
         String s = rawLine.replaceAll("[\\s]{2,}", " ");
@@ -124,5 +117,4 @@ public class Wage {
 
         return numbers;
     }
-
 }
