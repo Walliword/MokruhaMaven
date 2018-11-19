@@ -10,10 +10,10 @@ import java.io.*;
 import java.util.Map;
 
 public class TestingClass {
-    public static void main(String[] args) throws IOException {
-
-        ExcelExtractor();
-    }
+//    public static void main(String[] args) throws IOException {
+//
+//        ExcelExtractor();
+//    }
 
     private static void ExcelExtractor() throws IOException {
         FileInputStream fsIP= new FileInputStream(new File("C:\\Users\\Wallian\\IdeaProjects\\MokruhaMaven\\pdfs\\emplo.xlsx")); //Read the spreadsheet that needs to be updated

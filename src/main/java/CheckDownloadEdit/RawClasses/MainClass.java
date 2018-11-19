@@ -16,9 +16,9 @@ import java.util.List;
 
 public class MainClass {
 
-    public static void main(String[] args) {
-        downloadFile();
-    }
+//    public static void main(String[] args) {
+//        downloadFile();
+//    }
 
     private static void downloadFile() {
         URL url;

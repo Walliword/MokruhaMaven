@@ -27,10 +27,10 @@ public class SimpleTextExtractor {
     //пройти циклом раз - найти j начала таблицы и конца
     //пройти циклом два - достать в этих пределах все нужные значения
 
-    public static void main(String[] args) throws IOException {
-        extractLines();
-        excelExtractor();
-    }
+//    public static void main(String[] args) throws IOException {
+//        extractLines();
+//        excelExtractor();
+//    }
 
     private static void excelExtractor() throws IOException {
         FileInputStream fsIP= new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL)); //Read the spreadsheet that needs to be updated
