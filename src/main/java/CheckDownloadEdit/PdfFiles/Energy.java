@@ -30,6 +30,7 @@ public class Energy {
                     PdfsUtil.getMonthName(PdfsUtil.getMonth() + 1) +
                     " не поступало.");
         } else {
+            System.out.println("Обновляю страницу Энергия");
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
                 List<Double> data = getNumbers(getRawLines());
 

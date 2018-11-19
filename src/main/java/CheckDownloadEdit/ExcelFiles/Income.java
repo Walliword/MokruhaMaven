@@ -18,6 +18,7 @@ public class Income {
     public void makeMagic() {
         File file = FilesUtil.downloadFile(LINK);
         if (file != null) {
+            System.out.println("Обвновляю страницу Доходы населения");
             //получаем файлы
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                  FileInputStream fileStream = new FileInputStream(file)) {
@@ -65,11 +66,11 @@ public class Income {
                         FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                         wbMKR.write(mokruha);
                         mokruha.close();
-                        System.out.println("Редактирование страницы Доходы завершено");
+                        System.out.println("Редактирование страницы Доходы население завершено");
                     }
                 }
                 else {
-                    System.out.println("Данных по доходам за предыдущий год ещё не поступило");
+                    System.out.println("Данных по Доходам населения за предыдущий год ещё не поступило");
                 }
             } catch (IOException e) {
                 e.printStackTrace();

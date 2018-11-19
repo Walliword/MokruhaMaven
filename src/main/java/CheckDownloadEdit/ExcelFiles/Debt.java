@@ -19,6 +19,7 @@ public class Debt {
     public void makeMagic() {
         File file = FilesUtil.downloadFile(LINK);
         if (file != null) {
+            System.out.println("Обновляю страницу Долг");
             //получаем файлы
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                  FileInputStream fileStream = new FileInputStream(file)) {

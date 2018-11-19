@@ -9,9 +9,10 @@ import CheckDownloadEdit.HtmlFiles.Credits;
 import CheckDownloadEdit.HtmlFiles.DepositsNonF;
 
 public class Controller {
-    public static void main(String[] args) {
-        new Inflation().makeMagic();
+    public static void main(String[] args) throws InterruptedException {
         new GrossDomesticProduct().makeMagic();
+        new Inflation().makeMagic();
+        Thread.sleep(100);
         new Demography().makeMagic();
         new Income().makeMagic();
         new Debt().makeMagic();

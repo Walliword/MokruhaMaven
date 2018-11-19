@@ -22,9 +22,10 @@ public class PrivateOutflow {
     public void makeMagic() {
         File file = FilesUtil.downloadFile(LINK);
         if (file == null) {
-            System.out.println("Файл для вывоза капитала частным сектором отсутствует.");
+            System.out.println("Файл для Вывоза капитала частным сектором отсутствует.");
         }
         else {
+            System.out.println("Редактирую страницу Вывоза капитала");
             butchFile(file);
         }
     }

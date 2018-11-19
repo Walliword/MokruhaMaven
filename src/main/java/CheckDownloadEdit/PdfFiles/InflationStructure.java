@@ -32,6 +32,7 @@ public class InflationStructure {
                     PdfsUtil.getMonthName(PdfsUtil.getMonth() + 1) +
                     " не поступало.");
         } else {
+            System.out.println("Обновляю страницу Структура инфляции");
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
                 List<Double> data = getNumbers(getRawLines());
 

@@ -22,6 +22,7 @@ public class Demography {
         File menwomen = FilesUtil.downloadFile(LINK1);
         File people = FilesUtil.downloadFile(LINK2);
         if (menwomen != null && people != null) {
+            System.out.println("Обовляю страницу Демография");
             //получаем файлы
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                  FileInputStream sexes = new FileInputStream(menwomen);

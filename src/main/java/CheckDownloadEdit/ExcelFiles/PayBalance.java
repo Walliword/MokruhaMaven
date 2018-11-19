@@ -20,6 +20,7 @@ public class PayBalance {
         if (file == null) {
             System.out.println("Файл для страницы Платежный баланс отсутствует.");
         } else {
+            System.out.println("Редактирую страницу Платежный баланс");
             copyCells(file);
         }
     }

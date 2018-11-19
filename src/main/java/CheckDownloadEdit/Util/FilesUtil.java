@@ -25,6 +25,8 @@ public class FilesUtil {
      * @return возвращает результат проверки
      */
     public static boolean exists(String URLName) {
+        String filename = URLName.substring(URLName.lastIndexOf('/') + 1, URLName.lastIndexOf('.'));
+        String suffix = URLName.substring(URLName.lastIndexOf('.'));
         try {
             HttpURLConnection.setFollowRedirects(false);
             // note : you may also need
@@ -34,7 +36,7 @@ public class FilesUtil {
             con.setRequestMethod("HEAD");
             return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
         } catch (Exception e) {
-            System.out.println("Ошибка при проверке наличия файла");
+            System.out.println("Ошибка при проверке наличия файла " + filename + "." + suffix);
             e.printStackTrace();
             return false;
         }
@@ -68,11 +70,12 @@ public class FilesUtil {
      */
     public static File downloadFile(String URLName) {
         if (exists(URLName)) {
-            System.out.println("файл существует");
+            String filename = URLName.substring(URLName.lastIndexOf('/') + 1, URLName.lastIndexOf('.'));
+            String suffix = URLName.substring(URLName.lastIndexOf('.'));
+            System.out.println("файл " + filename + "." + suffix +
+                    " существует");
             try {
                 URL url = new URL(URLName);
-                String filename = URLName.substring(URLName.lastIndexOf('/') + 1, URLName.lastIndexOf('.'));
-                String suffix = URLName.substring(URLName.lastIndexOf('.'));
                 InputStream inputStream;
                 inputStream = url.openStream();
                 Path tempFile = Files.createTempFile(filename, suffix);

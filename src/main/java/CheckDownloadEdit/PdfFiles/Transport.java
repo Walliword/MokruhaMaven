@@ -22,31 +22,18 @@ import java.util.List;
 
 public class Transport {
 
-    private static int year;
-    private static int month;
 
-    static {
-        LocalDate today = LocalDate.now();
-        int m = today.getMonthValue();
-        if (m == 1) {
-            year = FilesUtil.getYear() - 1;
-            month = 11;
-        }
-        else {
-            year = FilesUtil.getYear();
-            month = m - 2;
-        }
-    }
 
     private static int[] months = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-    private static List<String> pdfs = PdfsUtil.getUrlStrings(months, year);
+    private static List<String> pdfs = PdfsUtil.getUrlStrings(months, PdfsUtil.getYear());
     private static int pdfSize = pdfs.size();
 
     public void makeMagic() {
-        if (pdfSize < month + 1) {
+        if (pdfSize < PdfsUtil.getMonth() + 1) {
             System.out.println("Информации по Транспорту за прошедший месяц не поступало.");
         }
         else {
+            System.out.println("Обновляю страницу Транспорт");
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
                 List<Double> data = getNumbers(getRawLines());
 
@@ -59,7 +46,7 @@ public class Transport {
                 XSSFCellStyle style2 = wbMKR.createCellStyle();
                 style2.setBorderRight(BorderStyle.THIN);
 
-                int row = 1 + (year - 17) * 12 + month;
+                int row = 1 + (PdfsUtil.getYear() - 17) * 12 + PdfsUtil.getMonth();
                 Cell cellMKR;
                 for (int c = 1; c <= 7; c++) {
                     cellMKR = worksheetMKR.getRow(row).createCell(c);
@@ -84,7 +71,7 @@ public class Transport {
 
     private List<String> getRawLines() {
         List<String> rawLines = new ArrayList<>();
-        File file = FilesUtil.downloadFile(pdfs.get(month));
+        File file = FilesUtil.downloadFile(pdfs.get(PdfsUtil.getMonth()));
         try {
             assert file != null;
             PdfReader reader = new PdfReader(file.getAbsolutePath());

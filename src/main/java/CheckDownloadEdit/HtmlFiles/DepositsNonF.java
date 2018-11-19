@@ -22,6 +22,7 @@ public class DepositsNonF {
     private static int VOLUME = 0;
 
     public void makeMagic() {
+        System.out.println("Редактирую страницу Депозиты юриков");
         try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
             List<Double[]> data = getLinesOfNumbers();
             XSSFWorkbook wbMKR = new XSSFWorkbook(mokruhaStream);

@@ -45,7 +45,7 @@ public class Trade {
                 XSSFSheet worksheet = wb.getSheetAt(6); //Access the worksheet, so that we can update / modify it.
                 double[] values = getValues(file.getAbsolutePath());
                 if (values[0] == values[1]) {
-                    System.out.println("Нет данных для предыдущего месяца");
+                    System.out.println("Нет данных для страницы Торговля для предыдущего месяца");
                 }
                 else {
                     //System.out.println(Arrays.toString(values));

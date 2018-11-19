@@ -18,6 +18,8 @@ import java.util.*;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
 
+import javax.sound.midi.Soundbank;
+
 public class FNB {
 
     private static final int year = FilesUtil.getYear();
@@ -44,6 +46,7 @@ public class FNB {
             if (docxData == null && htmlData.isEmpty() && excelData.isEmpty()) {
                 System.out.println("Нет данных для ФНБ/М2/ЗВР");
             } else {
+                System.out.println("Обновляю страницу ФНБ/М2/ЗВР");
                 XSSFWorkbook wbMKR = new XSSFWorkbook(mokruhaStream);
                 XSSFSheet worksheetMKR = wbMKR.getSheetAt(7);
 
@@ -54,6 +57,7 @@ public class FNB {
                 style.setBorderBottom(BorderStyle.MEDIUM);
 
                 if (docxData != null) {
+                    System.out.println("Обновляю ФНБ");
                     for (int i = 0; i < docxData.length; i++) {
                         String[] docxLine = docxData[i].split("\t");
                         for (int j = 0; j < docxLine.length; j++) {
@@ -64,6 +68,7 @@ public class FNB {
                 }
 
                 if (!htmlData.isEmpty()) {
+                    System.out.println("Обновляю ЗВР");
                     for (int i = 0; i < 100; i++) {
                         String[] htmlLine = htmlData.get(i);
                         worksheetMKR.getRow(i + 1).createCell(6).setCellValue(htmlLine[0]);
@@ -78,6 +83,7 @@ public class FNB {
                 }
 
                 if (!excelData.isEmpty()) {
+                    System.out.println("Обновляю М2");
                     worksheetMKR.createRow(121 + rowNum);
                     XSSFCellStyle styleDate = wbMKR.createCellStyle();
                     styleDate.setDataFormat((short) 14);
@@ -122,18 +128,22 @@ public class FNB {
     private List<String[]> getHtmlInfo() throws IOException {
         Elements links = HtmlUtil.getElementsByTr(LINK2);
         List<String[]> list = new LinkedList<>();
-        for (Element link : links) {
-            String[] line = new String[7];
-            String[] raw = link.text().split(" ");
-            if (raw.length > 12) {
-                line[0] = raw[0];
-                line[1] = raw[1] + raw[2];
-                line[2] = raw[3] + raw[4];
-                line[3] = raw[5] + raw[6];
-                line[4] = raw[7] + raw[8];
-                line[5] = raw[9] + raw[10];
-                line[6] = raw[11] + raw[12];
-                list.add(line);
+        if (links == null) {
+            System.out.println("Проблема с html для страницы ФНБ/М2/ЗВР");
+        } else {
+            for (Element link : links) {
+                String[] line = new String[7];
+                String[] raw = link.text().split(" ");
+                if (raw.length > 12) {
+                    line[0] = raw[0];
+                    line[1] = raw[1] + raw[2];
+                    line[2] = raw[3] + raw[4];
+                    line[3] = raw[5] + raw[6];
+                    line[4] = raw[7] + raw[8];
+                    line[5] = raw[9] + raw[10];
+                    line[6] = raw[11] + raw[12];
+                    list.add(line);
+                }
             }
         }
         return list;

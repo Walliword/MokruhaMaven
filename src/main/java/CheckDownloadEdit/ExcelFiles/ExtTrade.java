@@ -19,6 +19,7 @@ public class ExtTrade {
         if (file == null) {
             System.out.println("Файл для страницы Внешняя торговля отсутствует.");
         } else {
+            System.out.println("Редактирую страницу Внешняя торговля");
             copyCells(file);
         }
     }

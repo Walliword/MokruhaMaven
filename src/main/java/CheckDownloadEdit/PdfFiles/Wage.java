@@ -31,6 +31,7 @@ public class Wage {
                     PdfsUtil.getMonthName(PdfsUtil.getMonth() + 1) +
                     " не поступало.");
         } else {
+            System.out.println("Обновляю страницу Зарплата");
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
                 List<Double> data = getNumbers(getRawLine());
 

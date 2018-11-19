@@ -23,6 +23,7 @@ public class DepositsF {
 
 
     public void makeMagic() {
+        System.out.println("Редактирую страницу Депозиты физиков");
         try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
             List<Double[]> data = getLinesOfNumbers();
             XSSFWorkbook wbMKR = new XSSFWorkbook(mokruhaStream);
