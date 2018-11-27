@@ -71,6 +71,7 @@ public class Wage {
         int stopWord = 0;
         String rawLine = "";
         File file = FilesUtil.downloadFile(pdfs.get(pdfSize - 1));
+//        System.out.println(file);
         try {
             assert file != null;
             PdfReader reader = new PdfReader(file.getAbsolutePath());
@@ -82,14 +83,17 @@ public class Wage {
             for (int i = page + 2; i <= page + 3; i++) {
                 TextExtractionStrategy pageStrategy = new SimpleTextExtractionStrategy();
                 String tableText = PdfTextExtractor.getTextFromPage(reader, i, pageStrategy);
-                //System.out.println(tableText);
+//                System.out.println(tableText);
                 String[] lines = tableText.split("\n");
+//                System.out.println();
                 for (int j = 0; j < lines.length; j++) {
+//                    System.out.println(PdfsUtil.getMonthName(PdfsUtil.getMonth() + 1));
                     if (stopWord == 2) {
                         break;
                     }
                     if (lines[j].trim().startsWith(PdfsUtil.getMonthName(PdfsUtil.getMonth() + 1))
                             && !lines[j].contains("-")) {
+//                        System.out.println(lines[j]);
                         if ((j + 1) < lines.length && lines[j + 1].endsWith(")")) {
 //                            System.out.println(lines[j + 2]);
                             rawLine = (lines[j + 2]);
@@ -110,11 +114,13 @@ public class Wage {
 
     private List<Double> getNumbers(String rawLine) {
         List<Double> numbers = new ArrayList<>();
-
+//        System.out.println(rawLine);
         String s = rawLine.replaceAll("[\\s]{2,}", " ");
+//        System.out.println(s);
         numbers.add(PdfsUtil.getNumber(s, 0));
         numbers.add(PdfsUtil.getNumber(s, 3));
         numbers.add(PdfsUtil.getNumber(s, 4));
+//        System.out.println(numbers);
 
         return numbers;
     }

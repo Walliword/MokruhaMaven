@@ -65,7 +65,9 @@ public class PdfsUtil {
 
     public static double getNumber(String s, int position) {
         String a = s.replaceAll("[A-Za-zА-Яа-я;()·.\\-]", "").trim().replaceAll(",", ".");
+//        System.out.println(a);
         String numberString = (a.split(" ")[position]);
+//        System.out.println(numberString);
         return Double.parseDouble(numberString);
     }
 
@@ -83,6 +85,12 @@ public class PdfsUtil {
     public static String getMonthName(int number) {
         Month month = Month.of(number);
         Locale loc = Locale.forLanguageTag("ru");
-        return month.getDisplayName(TextStyle.FULL_STANDALONE, loc);
+        String word = month.getDisplayName(TextStyle.FULL_STANDALONE, loc);
+        return word.substring(0,1).toUpperCase() + word.substring(1);
     }
+
+//    public static String firstUpperCase(String word) {
+//        if(word==null || word.isEmpty()) return "";
+//        return word.substring(0,1).toUpperCase() + word.substring(1);
+//    }
 }
