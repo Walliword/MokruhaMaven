@@ -73,7 +73,7 @@ public class InflationStructure {
             String text = PdfTextExtractor.getTextFromPage(reader, 3, strategy);
 //                                    System.out.println(text);
             int page = PdfsUtil.getPage(text, "Потребительские цены…");
-            System.out.println(page);
+//            System.out.println(page);
             int num = 0;
             for (int i = page + 1; i <= page + 5; i++) {
                 TextExtractionStrategy pageStrategy = new SimpleTextExtractionStrategy();
@@ -146,8 +146,8 @@ public class InflationStructure {
                         }
                         if (lines[j].contains("Алкогольные напитки ")) {
                             rawLines.add(lines[j]);
-                            System.out.println(lines[j]);
-                            System.out.println(++num);
+//                            System.out.println(lines[j]);
+//                            System.out.println(++num);
                         }
                         if (lines[j].contains("Ткани")) {
                             rawLines.add(lines[j]);

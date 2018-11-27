@@ -78,7 +78,7 @@ public class Wage {
             String text = PdfTextExtractor.getTextFromPage(reader, 3, strategy);
 //                        System.out.println(text);
             int page = PdfsUtil.getPage(text, "УРОВЕНЬ ЖИЗНИ НАСЕЛЕНИЯ…");
-            System.out.println(page);
+//            System.out.println(page);
             for (int i = page + 2; i <= page + 3; i++) {
                 TextExtractionStrategy pageStrategy = new SimpleTextExtractionStrategy();
                 String tableText = PdfTextExtractor.getTextFromPage(reader, i, pageStrategy);
@@ -91,11 +91,11 @@ public class Wage {
                     if (lines[j].trim().startsWith(PdfsUtil.getMonthName(PdfsUtil.getMonth() + 1))
                             && !lines[j].contains("-")) {
                         if ((j + 1) < lines.length && lines[j + 1].endsWith(")")) {
-                            System.out.println(lines[j + 2]);
+//                            System.out.println(lines[j + 2]);
                             rawLine = (lines[j + 2]);
                             stopWord++;
                         } else if (!lines[j].contains(".")) {
-                            System.out.println(lines[j]);
+//                            System.out.println(lines[j]);
                             rawLine = (lines[j]);
                             stopWord++;
                         }

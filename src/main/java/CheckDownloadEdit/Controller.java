@@ -12,7 +12,7 @@ public class Controller {
     public static void main(String[] args) throws InterruptedException {
         new GrossDomesticProduct().makeMagic();
         new Inflation().makeMagic();
-        Thread.sleep(100);
+//        Thread.sleep(100);
         new Demography().makeMagic();
         new Income().makeMagic();
         new Debt().makeMagic();
@@ -25,6 +25,7 @@ public class Controller {
         new DepositsNonF().makeMagic();
         new Credits().makeMagic();
         new Transport().makeMagic();
+//        Thread.sleep(100);
         new Energy().makeMagic();
         new Wage().makeMagic();
         new InflationStructure().makeMagic();

@@ -75,16 +75,22 @@ public class Trade {
         double[] values = new double[2];
 
         PdfReader reader = new PdfReader(filePath);
-        for (int i = 51; i <= 75; ++i) {
-            TextExtractionStrategy strategy = new SimpleTextExtractionStrategy();
-            String text = PdfTextExtractor.getTextFromPage(reader, i, strategy);
-            String[] test = text.split("\n");
-
-            if (test[2].contains("РЫНОК ТОВАРОВ")) {
-                pageNumber = i;
-                break;
-            }
-        }
+        TextExtractionStrategy strategyPage = new SimpleTextExtractionStrategy();
+        String textPage = PdfTextExtractor.getTextFromPage(reader, 3, strategyPage);
+//                        System.out.println(text);
+        pageNumber = PdfsUtil.getPage(textPage, "РЫНОК ТОВАРОВ…");
+        System.out.println(pageNumber);
+//        for (int i = 51; i <= 75; ++i) {
+//            TextExtractionStrategy strategy = new SimpleTextExtractionStrategy();
+//            String text = PdfTextExtractor.getTextFromPage(reader, i, strategy);
+//            String[] test = text.split("\n");
+//
+//            if (test[2].contains("РЫНОК ТОВАРОВ")) {
+//                pageNumber = i;
+//                System.out.println(pageNumber);
+//                break;
+//            }
+//        }
 
         for (int j = pageNumber; j < pageNumber + getPage(); j++) {
             TextExtractionStrategy strategy = new SimpleTextExtractionStrategy();

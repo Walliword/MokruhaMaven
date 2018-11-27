@@ -72,8 +72,11 @@ public class FilesUtil {
         if (exists(URLName)) {
             String filename = URLName.substring(URLName.lastIndexOf('/') + 1, URLName.lastIndexOf('.'));
             String suffix = URLName.substring(URLName.lastIndexOf('.'));
-            System.out.println("файл " + filename + "." + suffix +
+            System.out.println("файл " + filename + suffix +
                     " существует");
+            Path filePath = Paths.get(DIRECTORY + filename + suffix);
+            if (!Files.exists(filePath)) {
+                System.out.println("Скачиваю файл");
             try {
                 URL url = new URL(URLName);
                 InputStream inputStream;
@@ -86,6 +89,11 @@ public class FilesUtil {
             } catch (IOException e) {
                 System.out.println("Ошибка при скачивании существующего файла");
                 e.printStackTrace();
+            }
+        }
+            else {
+                System.out.println("Файл уже скачан");
+                return new File(String.valueOf(DIRECTORY + filename + suffix));
             }
         } else System.out.println("файла не существует");
         return null;
