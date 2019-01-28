@@ -11,9 +11,13 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.*;
+
+import static java.lang.String.format;
 
 public class GrossDomesticProduct {
 
@@ -21,31 +25,30 @@ public class GrossDomesticProduct {
     private static int pdfSize = 0;
     private static int[] months = new int[]{3, 5, 8, 11};
 
-//    //сбор ссылки по частям
-//    private static final String PART1 = "http://www.gks.ru/free_doc/doc_20";
-//    //здесь год
-//    private static final String PART2 = "/info/oper-";
-//    //здесь месяц
-//    private static final String PART3 = "-20";
-//    //и снова год
-//    private static final String PART4 = ".pdf";
-
+    /**
+     * Данные за кварталы для этой страницы на 2018 год появляются в
+     * 5 (1), 8 (2), 11 (3) текущего года и 3 (4) следующего года.
+     * Информацию, ввиду изменчивости формата таблиц (на 2018 год формат
+     * меняется один раз в начале года), необходимо сверять в Феврале и в Марте.
+     */
 
 
     public void makeMagic() {
-        List<String> check = PdfsUtil.getUrlStrings(months, FilesUtil.getYear());
+        List<String> check = PdfsUtil.getUrlStrings(months, FilesUtil.CURRENT_YEAR);
         pdfSize = check.size();
         if (check.size() == 0) {
-            System.out.println("Нет данных по ВВП для текущего года");
+            PdfsUtil.LOG.info("Нет данных по ВВП для текущего года.");
+//            System.out.println("Нет данных по ВВП для текущего года");
         } else {
-            System.out.println("Обновляю страницу ВВП..");
+            PdfsUtil.LOG.debug("Обновляю страницу ВВП..");
+//            System.out.println("Обновляю страницу ВВП..");
             File file = FilesUtil.downloadFile(check.get(pdfSize - 1));
             assert file != null;
 
             try (FileInputStream fsIP = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                  XSSFWorkbook wb = new XSSFWorkbook(fsIP)) {
 
-                XSSFSheet worksheet = wb.getSheetAt(1); //Access the worksheet, so that we can update / modify it.
+                XSSFSheet worksheet = wb.getSheetAt(1); //Открываем страницу в файле
                 List<Double> values = getValues(file.getAbsolutePath());
                 int cellNumber = getCellNumber();
                 XSSFCellStyle style = wb.createCellStyle();
@@ -64,39 +67,20 @@ public class GrossDomesticProduct {
                     }
                     cell.setCellValue(values.get(i - 1));
                 }
-                fsIP.close(); //Close the InputStream
-                //Open FileOutputStream to write updates
+                fsIP.close(); //Закрываем поток чтения
+                //Открываем поток записи для записи обновленной информации
                 FileOutputStream output_file = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
-                wb.write(output_file); //write changes
-                output_file.close();  //close the stream
+                wb.write(output_file);
+                output_file.close();
 
-                System.out.println("Редактирование страницы ВВП завершено");
+                PdfsUtil.LOG.debug("Редактирование страницы ВВП завершено.");
+//                System.out.println("Редактирование страницы ВВП завершено");
             } catch (IOException e) {
+                PdfsUtil.LOG.error("Ошибка при обновлении страницы ВВП.");
                 e.printStackTrace();
             }
         }
     }
-
-
-//    private List<String> getUrlStrings() {
-//        List<String> pdfs = new ArrayList<>();
-//        int year = FilesUtil.getYear();
-//        for (int i = 0; i < 4; i++) {
-//            StringBuilder builder = new StringBuilder();
-//            builder.append(PART1).append(year).append(PART2);
-//            if (months[i] < 10) {
-//                builder.append(0);
-//            }
-//            builder.append(months[i]).append(PART3).append(year).append(PART4);
-//            String urlName = builder.toString();
-//            if (FilesUtil.exists(urlName)) {
-//                pdfs.add(urlName);
-//            }
-//        }
-//        //от количества ссылок будем отталкиваться
-//        pdfSize = pdfs.size();
-//        return pdfs;
-//    }
 
     private double getNumber(String s, int position) {
         String a = s.replaceAll("[A-Za-zА-Яа-я;]", "").trim().replaceAll(",", ".");
@@ -105,7 +89,7 @@ public class GrossDomesticProduct {
     }
 
     private int getCellNumber() {
-        return 7 + (FilesUtil.getYear() - 18) * 4 + pdfSize;
+        return 7 + (FilesUtil.CURRENT_YEAR - 18) * 4 + pdfSize;
     }
 
     private int limitNalog() {

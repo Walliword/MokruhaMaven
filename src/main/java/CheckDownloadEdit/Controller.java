@@ -9,24 +9,23 @@ import CheckDownloadEdit.HtmlFiles.Credits;
 import CheckDownloadEdit.HtmlFiles.DepositsNonF;
 
 public class Controller {
-    public static void main(String[] args) throws InterruptedException {
-        new GrossDomesticProduct().makeMagic();
-        new Inflation().makeMagic();
-        Thread.sleep(100);
-        new Demography().makeMagic();
-        new Income().makeMagic();
-        new Debt().makeMagic();
-        new Trade().makeMagic();
-        new FNB().makeMagic();
-        new PrivateOutflow().makeMagic();
-        new PayBalance().makeMagic();
-        new ExtTrade().makeMagic();
+    public static void main(String[] args) {
+//        new GrossDomesticProduct().makeMagic();
+//        new Inflation().makeMagic();
+//        new Demography().makeMagic();
+//        new Income().makeMagic();
+//        new Debt().makeMagic();
+//        new Trade().makeMagic();
+//        new FNB().makeMagic();
+//        new PrivateOutflow().makeMagic();
+//        new PayBalance().makeMagic();
+//        new ExtTrade().makeMagic(); //необходимо редактировать после выхода первых данных по 19
         new DepositsF().makeMagic();
         new DepositsNonF().makeMagic();
         new Credits().makeMagic();
-        new Transport().makeMagic();
-        new Energy().makeMagic();
-        new Wage().makeMagic();
-        new InflationStructure().makeMagic();
+//        new Transport().makeMagic();
+//        new Energy().makeMagic();
+//        new Wage().makeMagic();
+//        new InflationStructure().makeMagic();
     }
 }

@@ -3,6 +3,7 @@ package CheckDownloadEdit.MixedFiles;
 
 import CheckDownloadEdit.Util.FilesUtil;
 import CheckDownloadEdit.Util.HtmlUtil;
+import CheckDownloadEdit.Util.XlsxUtil;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -18,11 +19,9 @@ import java.util.*;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
 
-import javax.sound.midi.Soundbank;
-
 public class FNB {
 
-    private static final int year = FilesUtil.getYear();
+    private static final int year = FilesUtil.CURRENT_YEAR;
     private static final int month = LocalDate.now().getMonthValue();
     private static final int rowNum = 12 * (year - 18) + month - 1;
     private static final String LINK1 = "https://www.minfin.ru/common/upload/library/20" +
@@ -44,20 +43,19 @@ public class FNB {
             List<String[]> htmlData = getHtmlInfo();
             List<Cell> excelData = getExcelInfo();
             if (docxData == null && htmlData.isEmpty() && excelData.isEmpty()) {
-                System.out.println("Нет данных для ФНБ/М2/ЗВР");
+                FilesUtil.LOG.info("Нет данных для страницы ФНБ/М2/ЗВР.");
+//                System.out.println("Нет данных для ФНБ/М2/ЗВР");
             } else {
-                System.out.println("Обновляю страницу ФНБ/М2/ЗВР");
+                FilesUtil.LOG.debug("Обновляю страницу ФНБ/М2/ЗВР..");
+//                System.out.println("Обновляю страницу ФНБ/М2/ЗВР");
                 XSSFWorkbook wbMKR = new XSSFWorkbook(mokruhaStream);
                 XSSFSheet worksheetMKR = wbMKR.getSheetAt(7);
 
-                XSSFCellStyle style = wbMKR.createCellStyle();
-                style.setBorderRight(BorderStyle.MEDIUM);
-                style.setBorderLeft(BorderStyle.MEDIUM);
-                style.setBorderTop(BorderStyle.MEDIUM);
-                style.setBorderBottom(BorderStyle.MEDIUM);
+                XSSFCellStyle style = XlsxUtil.getSquareFatStyle(wbMKR);
 
                 if (docxData != null) {
-                    System.out.println("Обновляю ФНБ");
+                    FilesUtil.LOG.debug("Обновляю ФНБ..");
+//                    System.out.println("Обновляю ФНБ");
                     for (int i = 0; i < docxData.length; i++) {
                         String[] docxLine = docxData[i].split("\t");
                         for (int j = 0; j < docxLine.length; j++) {
@@ -68,7 +66,8 @@ public class FNB {
                 }
 
                 if (!htmlData.isEmpty()) {
-                    System.out.println("Обновляю ЗВР");
+                    HtmlUtil.LOG.debug("Обновляю ЗВР..");
+//                    System.out.println("Обновляю ЗВР");
                     for (int i = 0; i < 100; i++) {
                         String[] htmlLine = htmlData.get(i);
                         worksheetMKR.getRow(i + 1).createCell(6).setCellValue(htmlLine[0]);
@@ -83,7 +82,8 @@ public class FNB {
                 }
 
                 if (!excelData.isEmpty()) {
-                    System.out.println("Обновляю М2");
+                    XlsxUtil.LOG.debug("Обновляю М2..");
+//                    System.out.println("Обновляю М2");
                     worksheetMKR.createRow(121 + rowNum);
                     XSSFCellStyle styleDate = wbMKR.createCellStyle();
                     styleDate.setDataFormat((short) 14);
@@ -101,9 +101,11 @@ public class FNB {
                 FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                 wbMKR.write(mokruha);
                 mokruha.close();
-                System.out.println("Редактирование страницы ФНБ/М2/ЗВР завершено");
+                FilesUtil.LOG.debug("Редактирование страницы ФНБ/М2/ЗВР завершено.");
+//                System.out.println("Редактирование страницы ФНБ/М2/ЗВР завершено");
             }
         } catch (IOException e) {
+            FilesUtil.LOG.error("Ошибка чтения-записи данных на странице ФНБ/М2/ЗВР!");
             e.printStackTrace();
         }
     }
@@ -111,9 +113,11 @@ public class FNB {
     private String[] getDocxInfo() throws IOException {
         File file = FilesUtil.downloadFile(LINK1);
         if (file == null) {
-            System.out.println("Данного docx файла для страницы ФНБ/М2/ЗВР не существует");
+            FilesUtil.LOG.info("Данного docx файла для страницы ФНБ/М2/ЗВР не существует.");
+//            System.out.println("Данного docx файла для страницы ФНБ/М2/ЗВР не существует");
             return null;
         } else {
+            FilesUtil.LOG.debug("docx-файл существует, получаю данные...");
             XWPFDocument docx = new XWPFDocument(new FileInputStream(file));
             //using XWPFWordExtractor Class
             XWPFWordExtractor we = new XWPFWordExtractor(docx);
@@ -129,8 +133,10 @@ public class FNB {
         Elements links = HtmlUtil.getElementsByTr(LINK2);
         List<String[]> list = new LinkedList<>();
         if (links == null) {
-            System.out.println("Проблема с html для страницы ФНБ/М2/ЗВР");
+            HtmlUtil.LOG.error("Проблема с html для страницы ФНБ/М2/ЗВР. Проверьте доступ к ссылке.");
+//            System.out.println("Проблема с html для страницы ФНБ/М2/ЗВР");
         } else {
+            HtmlUtil.LOG.debug("Получаю данные из html-ссылки..");
             for (Element link : links) {
                 String[] line = new String[7];
                 String[] raw = link.text().split(" ");
@@ -153,13 +159,16 @@ public class FNB {
         File file = FilesUtil.downloadFile(LINK3);
         List<Cell> cells = new ArrayList<>();
         if (file == null) {
-            System.out.println("данного xlsx файла для страницы ФНБ/М2/ЗВР не существует");
+            XlsxUtil.LOG.info("Данного xlsx файла для страницы ФНБ/М2/ЗВР не существует.");
+//            System.out.println("данного xlsx файла для страницы ФНБ/М2/ЗВР не существует");
         } else {
+            XlsxUtil.LOG.debug("Получаю данные из xlsx-файла..");
             try (FileInputStream fileStream = new FileInputStream(file)) {
                 XSSFWorkbook wbF = new XSSFWorkbook(fileStream);
                 XSSFSheet worksheetF = wbF.getSheetAt(0);
                 if ((worksheetF.getRow(305 + rowNum)) == null) {
-                    System.out.println("Данных xlsx файла для страницы ФНБ/М2/ЗВР за текущий месяц не поступило");
+                    XlsxUtil.LOG.info("Данных из xlsx-файла для страницы ФНБ/М2/ЗВР за текущий месяц не поступило");
+//                    System.out.println("Данных xlsx файла для страницы ФНБ/М2/ЗВР за текущий месяц не поступило");
                 } else {
                     cells.add(worksheetF.getRow(305 + rowNum).getCell(0));
                     cells.add(worksheetF.getRow(305 + rowNum).getCell(1));

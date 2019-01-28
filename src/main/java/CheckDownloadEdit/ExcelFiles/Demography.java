@@ -1,6 +1,7 @@
 package CheckDownloadEdit.ExcelFiles;
 
 import CheckDownloadEdit.Util.FilesUtil;
+import CheckDownloadEdit.Util.XlsxUtil;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -11,6 +12,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
 
+import static java.lang.String.format;
+
 public class Demography {
 
     //мужчины и женщины
@@ -18,11 +21,18 @@ public class Demography {
     //всё население
     private static final String LINK2 = "http://www.gks.ru/free_doc/new_site/population/demo/demo14.xls";
 
+    /**
+     * Данные получаются из двух эксель-файлов, обновляющихся в течение года.
+     * В случае наличия в них данных за текущий год проверяется - были ли они уже записаны в файл ранее.
+     * Если нет - проводится запись.
+     */
+
     public void makeMagic() {
         File menwomen = FilesUtil.downloadFile(LINK1);
         File people = FilesUtil.downloadFile(LINK2);
         if (menwomen != null && people != null) {
-            System.out.println("Обовляю страницу Демография");
+            XlsxUtil.LOG.debug("Проверяю наличие данных для страницы Демография за текущий год..");
+//            System.out.println("Обовляю страницу Демография");
             //получаем файлы
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                  FileInputStream sexes = new FileInputStream(menwomen);
@@ -41,50 +51,54 @@ public class Demography {
                 Cell cellSX;
                 Cell cellPPL;
                 //наличие значений всего населения в текущем году
-                if ((cellSX = worksheetSX.getRow(FilesUtil.getYear() + 14).getCell(1)) == null
-                        && worksheetPPL.getRow(6).getCell(FilesUtil.getYear() + 4) == null) {
-                    System.out.println("Данные по демографии за текущий год отсутствуют");
+                if ((cellSX = worksheetSX.getRow(FilesUtil.CURRENT_YEAR + 14).getCell(1)) == null
+                        && worksheetPPL.getRow(6).getCell(FilesUtil.CURRENT_YEAR + 4) == null) {
+                    XlsxUtil.LOG.info("Данные по демографии за текущий год отсутствуют");
+//                    System.out.println("Данные по демографии за текущий год отсутствуют");
                 } else {
                     assert cellSX != null;
-                    if ((cellMKR = worksheetMKR.getRow(FilesUtil.getYear() + 10).getCell(1)) != null &&
+                    if ((cellMKR = worksheetMKR.getRow(FilesUtil.CURRENT_YEAR + 10).getCell(1)) != null &&
                     cellMKR.getNumericCellValue() == cellSX.getNumericCellValue()) {
-                        System.out.println("значения по демографии за текущий год уже добавлены");
+                        XlsxUtil.LOG.info("Данные по демографии за текущий год уже добавлены.");
+//                        System.out.println("значения по демографии за текущий год уже добавлены");
                     }
                     else {
+                        XlsxUtil.LOG.debug("Обовляю страницу Демография..");
                         //стиль
-                        XSSFCellStyle style = wbMKR.createCellStyle();
-                        style.setBorderRight(BorderStyle.THIN);
-                        style.setBorderLeft(BorderStyle.THIN);
-                        style.setBorderTop(BorderStyle.THIN);
-                        style.setBorderBottom(BorderStyle.THIN);
+                        XSSFCellStyle style = XlsxUtil.getSquareStyle(wbMKR);
                         //циклы
+                        //первый файл
                         for (int i = 0; i < 3; i++) {
-                            cellMKR = worksheetMKR.getRow(FilesUtil.getYear() + 10).createCell(i + 1);
-                            cellSX = worksheetSX.getRow(FilesUtil.getYear() + 14).getCell(i + 1);
+                            cellMKR = worksheetMKR.getRow(FilesUtil.CURRENT_YEAR + 10).createCell(i + 1);
+                            cellSX = worksheetSX.getRow(FilesUtil.CURRENT_YEAR + 14).getCell(i + 1);
                             cellMKR.setCellStyle(style);
                             cellMKR.setCellValue(cellSX.getNumericCellValue());
                         }
+                        //второй файл
                         for (int i = 0; i < 17; i++) {
-                            cellMKR = worksheetMKR.getRow(FilesUtil.getYear() + 4).createCell(i + 10);
-                            cellPPL = worksheetPPL.getRow(i + 6).getCell(FilesUtil.getYear() + 4);
+                            cellMKR = worksheetMKR.getRow(FilesUtil.CURRENT_YEAR + 4).createCell(i + 10);
+                            cellPPL = worksheetPPL.getRow(i + 6).getCell(FilesUtil.CURRENT_YEAR + 4);
                             cellMKR.setCellStyle(style);
                             if (cellPPL != null && cellPPL.getCellType() == Cell.CELL_TYPE_NUMERIC) {
                                 cellMKR.setCellValue(cellPPL.getNumericCellValue());
                             }
                         }
+                        //конец второй таблицы
                         for (int i = 0; i < 3; i++) {
-                            cellMKR = worksheetMKR.getRow(FilesUtil.getYear() + 4).createCell(28 + i * 2);
-                            cellPPL = worksheetPPL.getRow(i + 24).getCell(FilesUtil.getYear() + 4);
+                            cellMKR = worksheetMKR.getRow(FilesUtil.CURRENT_YEAR + 4).createCell(28 + i * 2);
+                            cellPPL = worksheetPPL.getRow(i + 24).getCell(FilesUtil.CURRENT_YEAR + 4);
                             cellMKR.setCellStyle(style);
                             cellMKR.setCellValue(cellPPL.getNumericCellValue());
                         }
                         FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                         wbMKR.write(mokruha);
                         mokruha.close();
-                        System.out.println("Редактирование страницы Демография завершено");
+                        XlsxUtil.LOG.debug("Редактирование страницы Демография завершено");
+//                        System.out.println("Редактирование страницы Демография завершено");
                     }
                 }
             } catch (IOException e) {
+                XlsxUtil.LOG.error(format("Ошибка при редактировании страницы Демография. %s", e.getMessage()));
                 e.printStackTrace();
             }
         }

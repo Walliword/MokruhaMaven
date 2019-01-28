@@ -14,12 +14,20 @@ public class ExtTrade {
 
     private static final String LINK = "http://www.customs.ru/attachments/article/24926/WEB_UTSA_04.xls";
 
+    /**
+     * Данные из одного эксель-файла, копируются при их наличии поячеечно.
+     * Пока неизвестно, чем будет отличаться структура файла после выхода данных по
+     * 19 году, так что 18 просто копируется полностью в сторонке.
+     */
+
     public void makeMagic() {
         File file = FilesUtil.downloadFile(LINK);
         if (file == null) {
-            System.out.println("Файл для страницы Внешняя торговля отсутствует.");
+            XlsxUtil.LOG.info("Файл для страницы Внешняя торговля отсутствует.");
+//            System.out.println("Файл для страницы Внешняя торговля отсутствует.");
         } else {
-            System.out.println("Редактирую страницу Внешняя торговля");
+            XlsxUtil.LOG.debug("Редактирую страницу Внешняя торговля..");
+//            System.out.println("Редактирую страницу Внешняя торговля");
             copyCells(file);
         }
     }
@@ -37,15 +45,18 @@ public class ExtTrade {
             //ячейки с числами
             Cell cellMKR;
             Cell cellExt;
-            for (int r = 6; r < 17; r++) {
+            for (int r = 6; r < 18; r++) {
                 for (int c = 1; c < 10; c++) {
                     if (worksheetExt.getRow(r + 40) == null) {
+                        XlsxUtil.LOG.info("Данных для страницы Внешняя торговля за этого года не поступало.");
                         break;
                     } else if (worksheetExt.getRow(r + 40).getCell(c) == null) {
                         c++;
                     } else {
                         cellExt = worksheetExt.getRow(r + 40).getCell(c);
-                        cellMKR = worksheetMKR.getRow(r).getCell(c);
+                        if (worksheetMKR.getRow(r + 13*(FilesUtil.CURRENT_YEAR-18)) == null)
+                            worksheetMKR.createRow(r + 13*(FilesUtil.CURRENT_YEAR-18));
+                        cellMKR = worksheetMKR.getRow(r + 13*(FilesUtil.CURRENT_YEAR-18)).createCell(c);
                         XlsxUtil.fillCells(cellExt, cellMKR);
                     }
                 }
@@ -53,8 +64,10 @@ public class ExtTrade {
             FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
             wbMKR.write(mokruha);
             mokruha.close();
-            System.out.println("Редактирование страницы Внешняя торговля завершено");
+            XlsxUtil.LOG.debug("Редактирование страницы Внешняя торговля завершено.");
+//            System.out.println("Редактирование страницы Внешняя торговля завершено");
         } catch (IOException e) {
+            XlsxUtil.LOG.error("Ошибка чтения-записи на странице Внешняя торговля.");
             e.printStackTrace();
         }
     }

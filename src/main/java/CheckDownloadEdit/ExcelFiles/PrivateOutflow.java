@@ -22,10 +22,12 @@ public class PrivateOutflow {
     public void makeMagic() {
         File file = FilesUtil.downloadFile(LINK);
         if (file == null) {
-            System.out.println("Файл для Вывоза капитала частным сектором отсутствует.");
+            XlsxUtil.LOG.info("Файл для страницы Вывоз капитала частным сектором отсутствует.");
+//            System.out.println("Файл для Вывоза капитала частным сектором отсутствует.");
         }
         else {
-            System.out.println("Редактирую страницу Вывоза капитала");
+            XlsxUtil.LOG.debug("Редактирую страницу Вывоз капитала");
+//            System.out.println("Редактирую страницу Вывоза капитала");
             butchFile(file);
         }
     }
@@ -47,7 +49,7 @@ public class PrivateOutflow {
             style.setBorderRight(BorderStyle.THIN);
             style.setBorderBottom(BorderStyle.HAIR);
 
-            int rowNum = 157 + 17*(FilesUtil.getYear()-17);
+            int rowNum = 157 + 17*(FilesUtil.CURRENT_YEAR-17);
             //идем по всем потенциальным стркоам года
             for (int i = 0; i < 17; i++) {
                 //если строка существует
@@ -59,7 +61,7 @@ public class PrivateOutflow {
                             for (int c = 0; c < 9; c++) {
                                 cellF = worksheetF.getRow(rowNum + i).
                                         getCell(c);
-                                int rownumMKR = 31 + 12 * (FilesUtil.getYear() - 18) + j;
+                                int rownumMKR = 31 + 12 * (FilesUtil.CURRENT_YEAR - 18) + j;
                                 if (worksheetMKR.getRow(rownumMKR) == null) {
                                     cellMKR = worksheetMKR.createRow(rownumMKR).createCell(c);
                                 } else {
@@ -76,8 +78,10 @@ public class PrivateOutflow {
             FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
             wbMKR.write(mokruha);
             mokruha.close();
-            System.out.println("Редактирование страницы Вывод капитала частным сектором завершено");
+            XlsxUtil.LOG.debug("Редактирование страницы Вывоз капитала частным сектором завершено.");
+//            System.out.println("Редактирование страницы Вывод капитала частным сектором завершено");
         } catch (IOException e) {
+            XlsxUtil.LOG.error("Ошибка чтения-записи для страницы Вывоз капитала.");
             e.printStackTrace();
         }
     }

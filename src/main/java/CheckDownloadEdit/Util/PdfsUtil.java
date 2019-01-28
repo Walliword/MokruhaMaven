@@ -1,5 +1,8 @@
 package CheckDownloadEdit.Util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.TextStyle;
@@ -16,11 +19,11 @@ public class PdfsUtil {
         LocalDate today = LocalDate.now();
         int m = today.getMonthValue();
         if (m == 1) {
-            year = FilesUtil.getYear() - 1;
+            year = FilesUtil.CURRENT_YEAR - 1;
             month = 11;
         }
         else {
-            year = FilesUtil.getYear();
+            year = FilesUtil.CURRENT_YEAR;
             month = m - 2;
         }
     }
@@ -43,6 +46,8 @@ public class PdfsUtil {
     private static final String PART3 = "-20";
     //и снова год
     private static final String PART4 = ".pdf";
+
+    public static final Logger LOG = LoggerFactory.getLogger(PdfsUtil.class);
 
     public static List<String> getUrlStrings(int[] months, int year) {
         List<String> pdfs = new ArrayList<>();
@@ -83,6 +88,7 @@ public class PdfsUtil {
     public static String getMonthName(int number) {
         Month month = Month.of(number);
         Locale loc = Locale.forLanguageTag("ru");
-        return month.getDisplayName(TextStyle.FULL_STANDALONE, loc);
+        String result = month.getDisplayName(TextStyle.FULL_STANDALONE, loc);
+        return result.substring(0, 1).toUpperCase() + result.substring(1);
     }
 }
