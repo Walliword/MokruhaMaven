@@ -77,7 +77,7 @@ public class Energy {
             String text = PdfTextExtractor.getTextFromPage(reader, 3, strategy);
 //            System.out.println(text);
             int page = PdfsUtil.getPage(text, "кондиционирование воздуха…");
-            System.out.println(page);
+//            System.out.println(page);
             for (int i = page; i <= page + 2; i++) {
                 TextExtractionStrategy pageStrategy = new SimpleTextExtractionStrategy();
                 String tableText = PdfTextExtractor.getTextFromPage(reader, i, pageStrategy);
@@ -87,27 +87,27 @@ public class Energy {
                     if (!lines[j].contains("-") && !lines[j].contains("%")) {
                         if (lines[j].contains("Электроэнергия,")) {
                             rawLines.add(lines[j].substring(24));
-                            System.out.println(lines[j]);
+//                            System.out.println(lines[j]);
                         }
                         if (lines[j].contains("атомными")) {
                             if (!lines[j].contains("атомными э")) {
                                 rawLines.add(lines[j]);
-                                System.out.println(lines[j]);
+//                                System.out.println(lines[j]);
                             }
                         }
                         if (lines[j].contains("тепловыми")) {
                             if (!lines[j].contains("тепловыми э")) {
                                 rawLines.add(lines[j]);
-                                System.out.println(lines[j]);
+//                                System.out.println(lines[j]);
                             }
                         }
                         if (lines[j].contains("гидроэлектростанциями")) {
                             rawLines.add(lines[j]);
-                            System.out.println(lines[j]);
+//                            System.out.println(lines[j]);
                         }
                         if (lines[j].contains("Пар и горячая вода,")) {
                             rawLines.add(lines[j].substring(24));
-                            System.out.println(lines[j]);
+//                            System.out.println(lines[j]);
                         }
                         if (lines[j].contains(" электростанциями ")) {
                             rawLines.add(lines[j]);
@@ -115,11 +115,11 @@ public class Energy {
                         }
                         if (lines[j].contains("котельными")) {
                             rawLines.add(lines[j]);
-                            System.out.println(lines[j]);
+//                            System.out.println(lines[j]);
                         }
                         if (lines[j].contains("промышленными утилизационными установками")) {
                             rawLines.add(lines[j]);
-                            System.out.println(lines[j]);
+//                            System.out.println(lines[j]);
                         }
                     }
                 }
