@@ -26,11 +26,11 @@ public class Energy {
 
     public void makeMagic() {
         if (pdfSize < PdfsUtil.getMonth() + 1) {
-            System.out.println("Информации по Энергии за " +
+            PdfsUtil.LOG.info("Информации по Энергии за " +
                     PdfsUtil.getMonthName(PdfsUtil.getMonth() + 1) +
                     " не поступало.");
         } else {
-            System.out.println("Обновляю страницу Энергия");
+            PdfsUtil.LOG.debug("Обновляю страницу Энергия, ожидается illegal access warning..");
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
                 List<Double> data = getNumbers(getRawLines());
 
@@ -59,11 +59,11 @@ public class Energy {
                 FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                 wbMKR.write(mokruha);
                 mokruha.close();
-                System.out.println("Редактирование страницы Энергия завершено");
+                PdfsUtil.LOG.debug("Редактирование страницы Энергия завершено.");
             } catch (IOException e) {
+                PdfsUtil.LOG.error("Возникло исключение при редактировании страницы Энергия.");
                 e.printStackTrace();
             }
-//        getRawLines();
         }
     }
 
@@ -111,7 +111,7 @@ public class Energy {
                         }
                         if (lines[j].contains(" электростанциями ")) {
                             rawLines.add(lines[j]);
-                            System.out.println(lines[j]);
+//                            System.out.println(lines[j]);
                         }
                         if (lines[j].contains("котельными")) {
                             rawLines.add(lines[j]);
@@ -125,8 +125,10 @@ public class Energy {
                 }
             }
         } catch (IOException e) {
+            PdfsUtil.LOG.error("Возникло исключении при получении данных для страницы Энергия.");
             e.printStackTrace();
         }
+//        System.out.println(rawLines);
         return rawLines;
     }
 
@@ -142,6 +144,7 @@ public class Energy {
                 numbers.add(PdfsUtil.getNumber(s, 0));
             }
         }
+//        System.out.println(numbers);
         return numbers;
     }
 }

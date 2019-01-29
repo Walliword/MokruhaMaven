@@ -27,11 +27,11 @@ public class Wage {
     public void makeMagic() {
         //ПОПРАВИТЬ
         if (pdfSize < PdfsUtil.getMonth() + 1) {
-            System.out.println("Информации по Зарплате за " +
+            PdfsUtil.LOG.info("Информации по Зарплате за " +
                     PdfsUtil.getMonthName(PdfsUtil.getMonth() + 1) +
                     " не поступало.");
         } else {
-            System.out.println("Обновляю страницу Зарплата");
+            PdfsUtil.LOG.debug("Обновляю страницу Зарплата, ожидается illegal access warning..");
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
                 List<Double> data = getNumbers(getRawLine());
 
@@ -60,8 +60,9 @@ public class Wage {
                 FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                 wbMKR.write(mokruha);
                 mokruha.close();
-                System.out.println("Редактирование страницы Зарплата завершено");
+                PdfsUtil.LOG.debug("Редактирование страницы Зарплата завершено.");
             } catch (IOException e) {
+                PdfsUtil.LOG.error("Возникло исключение при редактировании страницы Зарплата.");
                 e.printStackTrace();
             }
         }
@@ -70,6 +71,7 @@ public class Wage {
     private String getRawLine() {
         int stopWord = 0;
         String rawLine = "";
+        boolean tableStarted = false;
         File file = FilesUtil.downloadFile(pdfs.get(pdfSize - 1));
 //        System.out.println(file);
         try {
@@ -87,6 +89,9 @@ public class Wage {
                 String[] lines = tableText.split("\n");
 //                System.out.println();
                 for (int j = 0; j < lines.length; j++) {
+                    if (lines[j].contains("Таблица 3")) {
+                        tableStarted = true;
+                    }
 //                    System.out.println(PdfsUtil.getMonthName(PdfsUtil.getMonth() + 1));
                     if (stopWord == 2) {
                         break;
@@ -97,16 +102,19 @@ public class Wage {
                         if ((j + 1) < lines.length && lines[j + 1].endsWith(")")) {
 //                            System.out.println(lines[j + 2]);
                             rawLine = (lines[j + 2]);
+                            if (tableStarted)
                             stopWord++;
                         } else if (!lines[j].contains(".")) {
 //                            System.out.println(lines[j]);
                             rawLine = (lines[j]);
+                            if (tableStarted)
                             stopWord++;
                         }
                     }
                 }
             }
         } catch (IOException e) {
+            PdfsUtil.LOG.error("Возникло исключении при получении данных для страницы Зарплата.");
             e.printStackTrace();
         }
         return rawLine;
@@ -121,7 +129,6 @@ public class Wage {
         numbers.add(PdfsUtil.getNumber(s, 3));
         numbers.add(PdfsUtil.getNumber(s, 4));
 //        System.out.println(numbers);
-
         return numbers;
     }
 }

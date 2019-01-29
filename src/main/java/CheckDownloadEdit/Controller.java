@@ -20,12 +20,12 @@ public class Controller {
 //        new PrivateOutflow().makeMagic();
 //        new PayBalance().makeMagic();
 //        new ExtTrade().makeMagic(); //необходимо редактировать после выхода первых данных по 19
-        new DepositsF().makeMagic();
-        new DepositsNonF().makeMagic();
-        new Credits().makeMagic();
+//        new DepositsF().makeMagic();
+//        new DepositsNonF().makeMagic();
+//        new Credits().makeMagic();
 //        new Transport().makeMagic();
 //        new Energy().makeMagic();
 //        new Wage().makeMagic();
-//        new InflationStructure().makeMagic();
+        new InflationStructure().makeMagic();
     }
 }

@@ -16,13 +16,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Transport {
 
-
+    /**
+     * Данные по месяцам появляются в конце следующего месяца после нужного. Данные за декабрь
+     * появляются в январе следующего, поэтому необходимо переключение на прошлый год и соответствующий месяц
+     * в утильном классе.
+     */
 
     private static int[] months = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
     private static List<String> pdfs = PdfsUtil.getUrlStrings(months, PdfsUtil.getYear());
@@ -30,10 +33,10 @@ public class Transport {
 
     public void makeMagic() {
         if (pdfSize < PdfsUtil.getMonth() + 1) {
-            System.out.println("Информации по Транспорту за прошедший месяц не поступало.");
+            PdfsUtil.LOG.info("Информации для страницы Транспорт за прошедший месяц не поступало.");
         }
         else {
-            System.out.println("Обновляю страницу Транспорт");
+            PdfsUtil.LOG.debug("Обновляю страницу Транспорт, ожидается illegal access warning..");
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
                 List<Double> data = getNumbers(getRawLines());
 
@@ -46,9 +49,14 @@ public class Transport {
                 XSSFCellStyle style2 = wbMKR.createCellStyle();
                 style2.setBorderRight(BorderStyle.THIN);
 
+                // Здесь модифицируется номер строки для заполнения в ручном режиме
                 int row = 1 + (PdfsUtil.getYear() - 17) * 12 + PdfsUtil.getMonth();
+
                 Cell cellMKR;
                 for (int c = 1; c <= 7; c++) {
+                    if (worksheetMKR.getRow(row) == null) {
+                        worksheetMKR.createRow(row);
+                    }
                     cellMKR = worksheetMKR.getRow(row).createCell(c);
                     cellMKR.setCellValue(data.get(c - 1));
                     if (c == 1) {
@@ -61,9 +69,9 @@ public class Transport {
                 FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                 wbMKR.write(mokruha);
                 mokruha.close();
-                System.out.println("Редактирование страницы Транспорт завершено");
-
+                PdfsUtil.LOG.debug("Редактирование страницы Транспорт завершено.");
             } catch (IOException e) {
+                PdfsUtil.LOG.error("Возникло исключение при редактировании страницы Транспорт.");
                 e.printStackTrace();
             }
         }
@@ -71,19 +79,19 @@ public class Transport {
 
     private List<String> getRawLines() {
         List<String> rawLines = new ArrayList<>();
+
+        //Эта строка отвечает за выбор месяца из доступного списка - ДЛЯ РУЧНОГО ЗАПОЛНЕНИЯ
         File file = FilesUtil.downloadFile(pdfs.get(PdfsUtil.getMonth()));
+
         try {
             assert file != null;
             PdfReader reader = new PdfReader(file.getAbsolutePath());
             TextExtractionStrategy strategy = new SimpleTextExtractionStrategy();
             String text = PdfTextExtractor.getTextFromPage(reader, 3, strategy);
-            //System.out.println(text);
-            int page = getPage(text);
-            //System.out.println(page);
+            int page = PdfsUtil.getPage(text, "Транспорт…");
             for (int i = page; i <= page + 1; i++) {
                 TextExtractionStrategy pageStrategy = new SimpleTextExtractionStrategy();
                 String tableText = PdfTextExtractor.getTextFromPage(reader, i, pageStrategy);
-                //System.out.println(tableText);
                 String[] lines = tableText.split("\n");
                 for (int j = 0; j < lines.length; j++) {
                     if (!lines[j].contains("-")) {
@@ -112,8 +120,10 @@ public class Transport {
                 }
             }
         } catch (IOException e) {
+            PdfsUtil.LOG.error("Возникло исключении при получении данных для страницы Транспорт.");
             e.printStackTrace();
         }
+//        System.out.println(rawLines);
         return rawLines;
     }
 
@@ -126,18 +136,19 @@ public class Transport {
                 numbers.add(PdfsUtil.getNumber(s, 0));
             }
         }
+//        System.out.println(numbers);
         return numbers;
     }
 
-    private int getPage(String contents) {
-        String[] lines = contents.split("\n");
-        String page = "";
-        for (String line : lines) {
-            if (line.contains("Транспорт…")) {
-                page = line.substring(10).replaceAll("[A-Za-zА-Яа-я;.,…]", "").trim();
-            }
-        }
-        return Integer.parseInt(page);
-    }
-
+//    private int getPage(String contents) {
+//        String[] lines = contents.split("\n");
+//        String page = "";
+//        for (String line : lines) {
+//            if (line.contains("Транспорт…")) {
+//                page = line.substring(10).replaceAll("[A-Za-zА-Яа-я;.,…]", "").trim();
+////                System.out.println(page);
+//            }
+//        }
+//        return Integer.parseInt(page);
+//    }
 }

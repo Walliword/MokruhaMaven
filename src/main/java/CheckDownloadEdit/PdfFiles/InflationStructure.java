@@ -86,183 +86,183 @@ public class InflationStructure {
                             && !lines[j].contains("куриные") && !lines[j].endsWith("-") && !lines[j].trim().endsWith(",")) {
                         if (lines[j].contains("без алкогольных напитков")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("хлебобулочные изделия")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("крупа и бобовые")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("макаронные изделия")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("мясо и птица")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("рыба и морепродукты")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("молоко и молочная продукция")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("масло сливочное")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("масло подсолнечное")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("яйца")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("сахар-песок")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("плодоовощная продукция")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Алкогольные напитки ")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Ткани")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Одежда и белье")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Трикотажные изделия")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Обувь")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Моющие и чистящие средства")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Табачные изделия")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("бытовые приборы")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Телерадиотовары")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Строительные материалы")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Бензин автомобильный")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Медикаменты")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Жилищно-коммунальные услуги")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Медицинские услуги")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Услуги пассажирского транспорта")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Услуги связи")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Услуги организаций культуры")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Санаторно-оздоровительные услуги")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Услуги дошкольного воспитания")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Услуги образования")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Бытовые услуги")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Услуги зарубежного туризма")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Услуги физкультуры и спорта")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                         if (lines[j].contains("Услуги страхования")) {
                             rawLines.add(lines[j]);
-//                            System.out.println(lines[j]);
-//                            System.out.println(++num);
+                            System.out.println(lines[j]);
+                            System.out.println(++num);
                         }
                     }
                 }
@@ -270,6 +270,7 @@ public class InflationStructure {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println(rawLines);
         return rawLines;
     }
 
