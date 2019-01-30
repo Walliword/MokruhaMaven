@@ -32,6 +32,7 @@ public class Trade {
     public void makeMagic() {
         File file;
         //Если на дворе январь
+        PdfsUtil.LOG.debug("Проверяю наличие данных для страницы Торговля за предыдущий месяц..");
         if (check.size() == 0) {
             file = FilesUtil.downloadFile("http://www.gks.ru/free_doc/doc_20"
                     + (FilesUtil.CURRENT_YEAR - 1) + "/info/oper-12-20" + (FilesUtil.CURRENT_YEAR - 1) + ".pdf");
@@ -41,7 +42,7 @@ public class Trade {
             }
         } else {
             //Если не январь
-            PdfsUtil.LOG.debug("Проверяю наличие данных для страницы Торговля за предыдущий месяц..");
+//            PdfsUtil.LOG.debug("Проверяю наличие данных для страницы Торговля за предыдущий месяц..");
 //            System.out.println("Обновляю страницу Торговля..");
             file = FilesUtil.downloadFile(check.get(PdfsUtil.pdfSize - 1));
 //            assert file != null;
@@ -56,12 +57,15 @@ public class Trade {
 //                    System.out.println("Нет данных для страницы Торговля для предыдущего месяца");
                 }
                 else {
-                    //System.out.println(Arrays.toString(values));
+//                    System.out.println(Arrays.toString(values));
 
                     Cell cell1;
                     Cell cell2;
-                    cell1 = worksheet.getRow(121 + (FilesUtil.CURRENT_YEAR - 17) * 13 + getMonth()).createCell(2);
-                    cell2 = worksheet.getRow(121 + (FilesUtil.CURRENT_YEAR - 17) * 13 + getMonth()).createCell(3);
+                    if (worksheet.getRow(121 + (PdfsUtil.getYear() - 17) * 13 + getMonth()) == null) {
+                        worksheet.createRow(121 + (PdfsUtil.getYear() - 17) * 13 + getMonth());
+                    }
+                    cell1 = worksheet.getRow(121 + (PdfsUtil.getYear() - 17) * 13 + getMonth()).createCell(2);
+                    cell2 = worksheet.getRow(121 + (PdfsUtil.getYear() - 17) * 13 + getMonth()).createCell(3);
                     cell1.setCellValue(values[0]);
                     cell2.setCellValue(values[1]);
 
@@ -88,7 +92,7 @@ public class Trade {
         TextExtractionStrategy strategy = new SimpleTextExtractionStrategy();
         String text = PdfTextExtractor.getTextFromPage(reader, 3, strategy);
         int page = PdfsUtil.getPage(text, "РЫНОК ТОВАРОВ…");
-        System.out.println(page);
+//        System.out.println(page);
         //находим таблицу 3
         for (int i = page; i < page + 4; i++) {
             TextExtractionStrategy strategyTable = new SimpleTextExtractionStrategy();
@@ -96,7 +100,7 @@ public class Trade {
             String[] test = textTable.split("\n");
             for (String s : test) {
                 if (s.contains("Таблица 3")) {
-                    System.out.println(s);
+//                    System.out.println(s);
                     pageNumber = i;
                     break;
                 }
