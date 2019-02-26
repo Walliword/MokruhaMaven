@@ -26,7 +26,7 @@ public class Income {
     public void makeMagic() {
         File file = FilesUtil.downloadFile(LINK);
         if (file != null) {
-            XlsxUtil.LOG.debug("Проверяю наличие данных для страницы Доходы..");
+            XlsxUtil.LOG.debug("Checking data for Income..");
 //            System.out.println("Обвновляю страницу Доходы населения");
             //получаем файлы
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
@@ -48,11 +48,11 @@ public class Income {
                         (cellIN.getCellType() == Cell.CELL_TYPE_STRING)) {
                     if ((cellMKR = worksheetMKR.getRow(51 + (FilesUtil.CURRENT_YEAR - 16) * 6).getCell(1)) != null &&
                             cellIN.getStringCellValue().equals(cellMKR.getStringCellValue())) {
-                        XlsxUtil.LOG.info("Данные по доходам за текущий год уже добавлены");
+                        XlsxUtil.LOG.info("Data added already");
 //                        System.out.println("Данные по доходам за текущий год уже добавлены");
                     }
                     else {
-                        XlsxUtil.LOG.debug("Обновляю страницу Доходы..");
+                        XlsxUtil.LOG.debug("Updating Income page..");
                         //год
                         cellMKR = worksheetMKR.getRow(51 + (FilesUtil.CURRENT_YEAR - 16) * 6).createCell(1);
                         cellMKR.setCellValue(cellIN.getStringCellValue());
@@ -80,20 +80,20 @@ public class Income {
                         FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                         wbMKR.write(mokruha);
                         mokruha.close();
-                        XlsxUtil.LOG.debug("Редактирование страницы Доходы население завершено.");
+                        XlsxUtil.LOG.debug("Income update is completed.");
 //                        System.out.println("Редактирование страницы Доходы население завершено");
                     }
                 }
                 else {
-                    XlsxUtil.LOG.info("Данных по доходам населения за предыдущий год ещё не поступило.");
+                    XlsxUtil.LOG.info("No data for Income yet.");
 //                    System.out.println("Данных по доходам населения за предыдущий год ещё не поступило");
                 }
             } catch (IOException e) {
-                XlsxUtil.LOG.error("Ошибка чтения-записи страницы Доходы.");
+                XlsxUtil.LOG.error("Error at Income page.");
                 e.printStackTrace();
             }
             catch (NullPointerException x) {
-                XlsxUtil.LOG.error("Проблемы с данными на странице Доходы. Необходимы исправления.");
+                XlsxUtil.LOG.error("Error. Changes needed..");
                 x.printStackTrace();
             }
         }

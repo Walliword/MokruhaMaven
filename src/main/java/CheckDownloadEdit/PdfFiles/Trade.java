@@ -32,12 +32,12 @@ public class Trade {
     public void makeMagic() {
         File file;
         //Если на дворе январь
-        PdfsUtil.LOG.debug("Проверяю наличие данных для страницы Торговля за предыдущий месяц..");
+        PdfsUtil.LOG.debug("Checking new data for Trade page..");
         if (check.size() == 0) {
             file = FilesUtil.downloadFile("http://www.gks.ru/free_doc/doc_20"
                     + (FilesUtil.CURRENT_YEAR - 1) + "/info/oper-12-20" + (FilesUtil.CURRENT_YEAR - 1) + ".pdf");
             if (file == null) {
-                PdfsUtil.LOG.info("Нет данных по Торговле для текущего года.");
+                PdfsUtil.LOG.info("No data for this year.");
 //                System.out.println("Нет данных по Торговле для текущего года");
             }
         } else {
@@ -53,7 +53,7 @@ public class Trade {
                 XSSFSheet worksheet = wb.getSheetAt(6);
                 double[] values = getValues(file.getAbsolutePath());
                 if (values[0] == values[1]) {
-                    PdfsUtil.LOG.info("Нет данных для страницы Торговля для предыдущего месяца.");
+                    PdfsUtil.LOG.info("There is no data for previous month.");
 //                    System.out.println("Нет данных для страницы Торговля для предыдущего месяца");
                 }
                 else {
@@ -74,11 +74,11 @@ public class Trade {
                     FileOutputStream output_file = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                     wb.write(output_file); //write changes
                     output_file.close();  //close the stream
-                    PdfsUtil.LOG.debug("Редактирование страницы Торговля завершено.");
+                    PdfsUtil.LOG.debug("Update is completed.");
 //                    System.out.println("Редактирование страницы Торговля завершено");
                 }
             } catch (IOException e) {
-                PdfsUtil.LOG.error("Ошибка чтения-записи данных для страницы Торговля.");
+                PdfsUtil.LOG.error("Error happened.");
                 e.printStackTrace();
             }
         }

@@ -43,10 +43,10 @@ public class FNB {
             List<String[]> htmlData = getHtmlInfo();
             List<Cell> excelData = getExcelInfo();
             if (docxData == null && htmlData.isEmpty() && excelData.isEmpty()) {
-                FilesUtil.LOG.info("Нет данных для страницы ФНБ/М2/ЗВР.");
+                FilesUtil.LOG.info("No data for FNB/M2/GR.");
 //                System.out.println("Нет данных для ФНБ/М2/ЗВР");
             } else {
-                FilesUtil.LOG.debug("Обновляю страницу ФНБ/М2/ЗВР..");
+                FilesUtil.LOG.debug("Updating FNB/M2/GR page..");
 //                System.out.println("Обновляю страницу ФНБ/М2/ЗВР");
                 XSSFWorkbook wbMKR = new XSSFWorkbook(mokruhaStream);
                 XSSFSheet worksheetMKR = wbMKR.getSheetAt(7);
@@ -54,7 +54,7 @@ public class FNB {
                 XSSFCellStyle style = XlsxUtil.getSquareFatStyle(wbMKR);
 
                 if (docxData != null) {
-                    FilesUtil.LOG.debug("Обновляю ФНБ..");
+                    FilesUtil.LOG.debug("Updating FNB..");
 //                    System.out.println("Обновляю ФНБ");
                     for (int i = 0; i < docxData.length; i++) {
                         String[] docxLine = docxData[i].split("\t");
@@ -66,7 +66,7 @@ public class FNB {
                 }
 
                 if (!htmlData.isEmpty()) {
-                    HtmlUtil.LOG.debug("Обновляю ЗВР..");
+                    HtmlUtil.LOG.debug("Updating GR..");
 //                    System.out.println("Обновляю ЗВР");
                     for (int i = 0; i < 100; i++) {
                         String[] htmlLine = htmlData.get(i);
@@ -82,7 +82,7 @@ public class FNB {
                 }
 
                 if (!excelData.isEmpty()) {
-                    XlsxUtil.LOG.debug("Обновляю М2..");
+                    XlsxUtil.LOG.debug("Updating M2..");
 //                    System.out.println("Обновляю М2");
                     worksheetMKR.createRow(121 + rowNum);
                     XSSFCellStyle styleDate = wbMKR.createCellStyle();
@@ -101,11 +101,11 @@ public class FNB {
                 FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                 wbMKR.write(mokruha);
                 mokruha.close();
-                FilesUtil.LOG.debug("Редактирование страницы ФНБ/М2/ЗВР завершено.");
+                FilesUtil.LOG.debug("Update is completed.");
 //                System.out.println("Редактирование страницы ФНБ/М2/ЗВР завершено");
             }
         } catch (IOException e) {
-            FilesUtil.LOG.error("Ошибка чтения-записи данных на странице ФНБ/М2/ЗВР!");
+            FilesUtil.LOG.error("Error happened");
             e.printStackTrace();
         }
     }
@@ -113,11 +113,11 @@ public class FNB {
     private String[] getDocxInfo() throws IOException {
         File file = FilesUtil.downloadFile(LINK1);
         if (file == null) {
-            FilesUtil.LOG.info("Данного docx файла для страницы ФНБ/М2/ЗВР не существует.");
+            FilesUtil.LOG.info("docx-file is missing.");
 //            System.out.println("Данного docx файла для страницы ФНБ/М2/ЗВР не существует");
             return null;
         } else {
-            FilesUtil.LOG.debug("docx-файл существует, получаю данные...");
+            FilesUtil.LOG.debug("docx-file is available...");
             XWPFDocument docx = new XWPFDocument(new FileInputStream(file));
             //using XWPFWordExtractor Class
             XWPFWordExtractor we = new XWPFWordExtractor(docx);
@@ -133,10 +133,10 @@ public class FNB {
         Elements links = HtmlUtil.getElementsByTr(LINK2);
         List<String[]> list = new LinkedList<>();
         if (links == null) {
-            HtmlUtil.LOG.error("Проблема с html для страницы ФНБ/М2/ЗВР. Проверьте доступ к ссылке.");
+            HtmlUtil.LOG.error("Problem with html-page.");
 //            System.out.println("Проблема с html для страницы ФНБ/М2/ЗВР");
         } else {
-            HtmlUtil.LOG.debug("Получаю данные из html-ссылки..");
+            HtmlUtil.LOG.debug("Collecting data..");
             for (Element link : links) {
                 String[] line = new String[7];
                 String[] raw = link.text().split(" ");
@@ -159,15 +159,15 @@ public class FNB {
         File file = FilesUtil.downloadFile(LINK3);
         List<Cell> cells = new ArrayList<>();
         if (file == null) {
-            XlsxUtil.LOG.info("Данного xlsx файла для страницы ФНБ/М2/ЗВР не существует.");
+            XlsxUtil.LOG.info("No xlsx file available.");
 //            System.out.println("данного xlsx файла для страницы ФНБ/М2/ЗВР не существует");
         } else {
-            XlsxUtil.LOG.debug("Получаю данные из xlsx-файла..");
+            XlsxUtil.LOG.debug("Getting xlsx data..");
             try (FileInputStream fileStream = new FileInputStream(file)) {
                 XSSFWorkbook wbF = new XSSFWorkbook(fileStream);
                 XSSFSheet worksheetF = wbF.getSheetAt(0);
                 if ((worksheetF.getRow(305 + rowNum)) == null) {
-                    XlsxUtil.LOG.info("Данных из xlsx-файла для страницы ФНБ/М2/ЗВР за текущий месяц не поступило");
+                    XlsxUtil.LOG.info("No new data available");
 //                    System.out.println("Данных xlsx файла для страницы ФНБ/М2/ЗВР за текущий месяц не поступило");
                 } else {
                     cells.add(worksheetF.getRow(305 + rowNum).getCell(0));

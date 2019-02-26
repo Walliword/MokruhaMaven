@@ -28,11 +28,9 @@ public class InflationStructure {
 
     public void makeMagic() {
         if (pdfSize < PdfsUtil.getMonth() + 1) {
-            PdfsUtil.LOG.info("Информации по Структуре Инфляции за " +
-                    PdfsUtil.getMonthName(PdfsUtil.getMonth() + 1) +
-                    " не поступало.");
+            PdfsUtil.LOG.info("No new data for Inflation Structure is available");
         } else {
-            PdfsUtil.LOG.debug("Обновляю страницу Структура инфляции..");
+            PdfsUtil.LOG.debug("Updating Inflation Structure page..");
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
                 List<Double> data = getNumbers(getRawLines());
 
@@ -56,9 +54,9 @@ public class InflationStructure {
                 FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                 wbMKR.write(mokruha);
                 mokruha.close();
-                PdfsUtil.LOG.debug("Редактирование страницы Структура Инфляции завершено.");
+                PdfsUtil.LOG.debug("Update is completed.");
             } catch (IOException e) {
-                PdfsUtil.LOG.error("Возникло исключение при редактировании страницы Структура инфляции.");
+                PdfsUtil.LOG.error("Error during Inflation Structure update.");
                 e.printStackTrace();
             }
         }
@@ -287,7 +285,7 @@ public class InflationStructure {
                 }
             }
         } catch (IOException e) {
-            PdfsUtil.LOG.error("Возникло исключении при получении данных для страницы Структура инфляции.");
+            PdfsUtil.LOG.error("Error with data happened.");
             e.printStackTrace();
         }
 //        System.out.println(rawLines);

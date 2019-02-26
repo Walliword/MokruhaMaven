@@ -27,11 +27,9 @@ public class Wage {
     public void makeMagic() {
         //ПОПРАВИТЬ
         if (pdfSize < PdfsUtil.getMonth() + 1) {
-            PdfsUtil.LOG.info("Информации по Зарплате за " +
-                    PdfsUtil.getMonthName(PdfsUtil.getMonth() + 1) +
-                    " не поступало.");
+            PdfsUtil.LOG.info("No new info for Wage page is available");
         } else {
-            PdfsUtil.LOG.debug("Обновляю страницу Зарплата, ожидается illegal access warning..");
+            PdfsUtil.LOG.debug("Updating Wage page..");
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
                 List<Double> data = getNumbers(getRawLine());
 
@@ -60,9 +58,9 @@ public class Wage {
                 FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                 wbMKR.write(mokruha);
                 mokruha.close();
-                PdfsUtil.LOG.debug("Редактирование страницы Зарплата завершено.");
+                PdfsUtil.LOG.debug("Update is completed.");
             } catch (IOException e) {
-                PdfsUtil.LOG.error("Возникло исключение при редактировании страницы Зарплата.");
+                PdfsUtil.LOG.error("Error happened.");
                 e.printStackTrace();
             }
         }
@@ -114,7 +112,7 @@ public class Wage {
                 }
             }
         } catch (IOException e) {
-            PdfsUtil.LOG.error("Возникло исключении при получении данных для страницы Зарплата.");
+            PdfsUtil.LOG.error("Error with getting data.");
             e.printStackTrace();
         }
         return rawLine;

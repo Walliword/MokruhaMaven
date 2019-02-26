@@ -26,11 +26,9 @@ public class Energy {
 
     public void makeMagic() {
         if (pdfSize < PdfsUtil.getMonth() + 1) {
-            PdfsUtil.LOG.info("Информации по Энергии за " +
-                    PdfsUtil.getMonthName(PdfsUtil.getMonth() + 1) +
-                    " не поступало.");
+            PdfsUtil.LOG.info("No new info for Energy page is available.");
         } else {
-            PdfsUtil.LOG.debug("Обновляю страницу Энергия, ожидается illegal access warning..");
+            PdfsUtil.LOG.debug("Updating Energy page..");
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
                 List<Double> data = getNumbers(getRawLines());
 
@@ -59,9 +57,9 @@ public class Energy {
                 FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                 wbMKR.write(mokruha);
                 mokruha.close();
-                PdfsUtil.LOG.debug("Редактирование страницы Энергия завершено.");
+                PdfsUtil.LOG.debug("Update is completed.");
             } catch (IOException e) {
-                PdfsUtil.LOG.error("Возникло исключение при редактировании страницы Энергия.");
+                PdfsUtil.LOG.error("Error happened.");
                 e.printStackTrace();
             }
         }
@@ -125,7 +123,7 @@ public class Energy {
                 }
             }
         } catch (IOException e) {
-            PdfsUtil.LOG.error("Возникло исключении при получении данных для страницы Энергия.");
+            PdfsUtil.LOG.error("Problem with getting data.");
             e.printStackTrace();
         }
 //        System.out.println(rawLines);

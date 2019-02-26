@@ -23,7 +23,7 @@ public class Credits {
             ".htm&pid=pdko_sub&sid=dopk";
 
     public void makeMagic() {
-        HtmlUtil.LOG.debug("Редактирую страницу Кредиты..");
+        HtmlUtil.LOG.debug("Updating Credits page..");
         try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
             List<Double[]> data = HtmlUtil.getLinesOfNumbers(LINK_CURRENT, LINK_PREV, 20);
             if (data != null) {
@@ -54,13 +54,13 @@ public class Credits {
                 FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                 wbMKR.write(mokruha);
                 mokruha.close();
-                HtmlUtil.LOG.debug("Редактирование страницы Кредиты завершено.");
+                HtmlUtil.LOG.debug("Update completed.");
             }
             else {
-                HtmlUtil.LOG.info("Данные для страницы Кредиты отсутствуют.");
+                HtmlUtil.LOG.info("No data.");
             }
         } catch (IOException e) {
-            HtmlUtil.LOG.error("Ошибка при редактировании страницы Кредиты.");
+            HtmlUtil.LOG.error("Error happened.");
             e.printStackTrace();
         }
     }

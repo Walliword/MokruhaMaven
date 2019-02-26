@@ -91,7 +91,7 @@ public class FilesUtil {
         if (exists(URLName)) {
             String filename = URLName.substring(URLName.lastIndexOf('/') + 1, URLName.lastIndexOf('.'));
             String suffix = URLName.substring(URLName.lastIndexOf('.'));
-            LOG.debug(format("Файл %s%s существует. Скачиваю..", filename, suffix));
+            LOG.debug(format("File %s%s exists. Downloading..", filename, suffix));
 //            System.out.println("файл " + filename + "." + suffix +
 //                    " существует");
             try {

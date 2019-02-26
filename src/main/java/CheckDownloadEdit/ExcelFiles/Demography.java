@@ -31,7 +31,7 @@ public class Demography {
         File menwomen = FilesUtil.downloadFile(LINK1);
         File people = FilesUtil.downloadFile(LINK2);
         if (menwomen != null && people != null) {
-            XlsxUtil.LOG.debug("Проверяю наличие данных для страницы Демография за текущий год..");
+            XlsxUtil.LOG.debug("Checking Demography data for this year..");
 //            System.out.println("Обовляю страницу Демография");
             //получаем файлы
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
@@ -53,17 +53,17 @@ public class Demography {
                 //наличие значений всего населения в текущем году
                 if ((cellSX = worksheetSX.getRow(FilesUtil.CURRENT_YEAR + 14).getCell(1)) == null
                         && worksheetPPL.getRow(6).getCell(FilesUtil.CURRENT_YEAR + 4) == null) {
-                    XlsxUtil.LOG.info("Данные по демографии за текущий год отсутствуют");
+                    XlsxUtil.LOG.info("No Demography data for this year available.");
 //                    System.out.println("Данные по демографии за текущий год отсутствуют");
                 } else {
                     assert cellSX != null;
                     if ((cellMKR = worksheetMKR.getRow(FilesUtil.CURRENT_YEAR + 10).getCell(1)) != null &&
                     cellMKR.getNumericCellValue() == cellSX.getNumericCellValue()) {
-                        XlsxUtil.LOG.info("Данные по демографии за текущий год уже добавлены.");
+                        XlsxUtil.LOG.info("Demography data for this year already added.");
 //                        System.out.println("значения по демографии за текущий год уже добавлены");
                     }
                     else {
-                        XlsxUtil.LOG.debug("Обовляю страницу Демография..");
+                        XlsxUtil.LOG.debug("Updating Demography..");
                         //стиль
                         XSSFCellStyle style = XlsxUtil.getSquareStyle(wbMKR);
                         //циклы
@@ -93,12 +93,12 @@ public class Demography {
                         FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                         wbMKR.write(mokruha);
                         mokruha.close();
-                        XlsxUtil.LOG.debug("Редактирование страницы Демография завершено");
+                        XlsxUtil.LOG.debug("Demography page updated.");
 //                        System.out.println("Редактирование страницы Демография завершено");
                     }
                 }
             } catch (IOException e) {
-                XlsxUtil.LOG.error(format("Ошибка при редактировании страницы Демография. %s", e.getMessage()));
+                XlsxUtil.LOG.error(format("Problem at Demography page. %s", e.getMessage()));
                 e.printStackTrace();
             }
         }

@@ -24,7 +24,7 @@ public class Debt {
     public void makeMagic() {
         File file = FilesUtil.downloadFile(LINK);
         if (file != null) {
-            XlsxUtil.LOG.debug("Проверяю наличие данных для страницы Долг..");
+            XlsxUtil.LOG.debug("Checking data for Debt page..");
 //            System.out.println("Обновляю страницу Долг");
             //получаем файлы
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
@@ -41,7 +41,7 @@ public class Debt {
                 XSSFCellStyle style = wbMKR.createCellStyle();
                 //проверка совпадений
                 if (cellMKR.getStringCellValue().equals(cellF.getStringCellValue())) {
-                    XlsxUtil.LOG.info("Изменений страницы Долг не требуется");
+                    XlsxUtil.LOG.info("Changing of Debt page is not needed.");
 //                    System.out.println("Изменений страницы Долг не требуется");
                 } else {
                     for (int r = 1; r < 45; r++) {
@@ -65,15 +65,15 @@ public class Debt {
                     FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                     wbMKR.write(mokruha);
                     mokruha.close();
-                    XlsxUtil.LOG.debug("Обновление страницы Долг завершено.");
+                    XlsxUtil.LOG.debug("Updating Debt page is done.");
 //                    System.out.println("Редактирование страницы Долг завершено");
                 }
             } catch (IOException e) {
-                XlsxUtil.LOG.error("Ошибка чтения-записи страницы Долг.");
+                XlsxUtil.LOG.error("IO-Exception at Debt page.");
                 e.printStackTrace();
             }
             catch (NullPointerException x) {
-                XlsxUtil.LOG.error("Проблемы с данными на странице Долг. Необходимы исправления.");
+                XlsxUtil.LOG.error("Some null pointer problem in Debt page. Code updating is needed.");
                 x.printStackTrace();
             }
         }

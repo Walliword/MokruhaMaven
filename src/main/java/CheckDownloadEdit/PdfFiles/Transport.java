@@ -33,10 +33,10 @@ public class Transport {
 
     public void makeMagic() {
         if (pdfSize < PdfsUtil.getMonth() + 1) {
-            PdfsUtil.LOG.info("Информации для страницы Транспорт за прошедший месяц не поступало.");
+            PdfsUtil.LOG.info("No new data for Transport page is available.");
         }
         else {
-            PdfsUtil.LOG.debug("Обновляю страницу Транспорт, ожидается illegal access warning..");
+            PdfsUtil.LOG.debug("Updating Transport page..");
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
                 List<Double> data = getNumbers(getRawLines());
 
@@ -69,9 +69,9 @@ public class Transport {
                 FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                 wbMKR.write(mokruha);
                 mokruha.close();
-                PdfsUtil.LOG.debug("Редактирование страницы Транспорт завершено.");
+                PdfsUtil.LOG.debug("Update is completed.");
             } catch (IOException e) {
-                PdfsUtil.LOG.error("Возникло исключение при редактировании страницы Транспорт.");
+                PdfsUtil.LOG.error("Error happened.");
                 e.printStackTrace();
             }
         }
@@ -120,7 +120,7 @@ public class Transport {
                 }
             }
         } catch (IOException e) {
-            PdfsUtil.LOG.error("Возникло исключении при получении данных для страницы Транспорт.");
+            PdfsUtil.LOG.error("Problem with getting data.");
             e.printStackTrace();
         }
 //        System.out.println(rawLines);
@@ -139,16 +139,4 @@ public class Transport {
 //        System.out.println(numbers);
         return numbers;
     }
-
-//    private int getPage(String contents) {
-//        String[] lines = contents.split("\n");
-//        String page = "";
-//        for (String line : lines) {
-//            if (line.contains("Транспорт…")) {
-//                page = line.substring(10).replaceAll("[A-Za-zА-Яа-я;.,…]", "").trim();
-////                System.out.println(page);
-//            }
-//        }
-//        return Integer.parseInt(page);
-//    }
 }

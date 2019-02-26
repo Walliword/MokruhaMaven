@@ -23,10 +23,10 @@ public class ExtTrade {
     public void makeMagic() {
         File file = FilesUtil.downloadFile(LINK);
         if (file == null) {
-            XlsxUtil.LOG.info("Файл для страницы Внешняя торговля отсутствует.");
+            XlsxUtil.LOG.info("No file for ExtTrade.");
 //            System.out.println("Файл для страницы Внешняя торговля отсутствует.");
         } else {
-            XlsxUtil.LOG.debug("Редактирую страницу Внешняя торговля..");
+            XlsxUtil.LOG.debug("Updating ExtTrade..");
 //            System.out.println("Редактирую страницу Внешняя торговля");
             copyCells(file);
         }
@@ -48,7 +48,7 @@ public class ExtTrade {
             for (int r = 6; r < 18; r++) {
                 for (int c = 1; c < 10; c++) {
                     if (worksheetExt.getRow(r + 40) == null) {
-                        XlsxUtil.LOG.info("Данных для страницы Внешняя торговля за этого года не поступало.");
+                        XlsxUtil.LOG.info("No data for ExtTrade.");
                         break;
                     } else if (worksheetExt.getRow(r + 40).getCell(c) == null) {
                         c++;
@@ -64,10 +64,10 @@ public class ExtTrade {
             FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
             wbMKR.write(mokruha);
             mokruha.close();
-            XlsxUtil.LOG.debug("Редактирование страницы Внешняя торговля завершено.");
+            XlsxUtil.LOG.debug("ExtTrade page update is completed.");
 //            System.out.println("Редактирование страницы Внешняя торговля завершено");
         } catch (IOException e) {
-            XlsxUtil.LOG.error("Ошибка чтения-записи на странице Внешняя торговля.");
+            XlsxUtil.LOG.error("Error at ExtTrade update.");
             e.printStackTrace();
         }
     }

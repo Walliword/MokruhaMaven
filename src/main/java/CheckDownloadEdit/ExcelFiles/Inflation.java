@@ -27,7 +27,7 @@ public class Inflation {
     public void makeMagic() {
         File file = FilesUtil.downloadFile(LINK);
         if (file != null) {
-            LOG.debug("Обновляю страницу Инфляция..");
+            LOG.debug("Updating Inflation page..");
 //            System.out.println("Обновляю страницу Инфляция");
             //получаем файлы
             try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
@@ -65,16 +65,16 @@ public class Inflation {
                 FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                 wbMKR.write(mokruha);
                 mokruha.close();
-                LOG.debug("Актуальные данные для страницы Инфляция добавлены.");
+                LOG.debug("Data added.");
 //                System.out.println("Актуальные данные для страницы Инфляция добавлены");
 
             } catch (IOException e) {
-                LOG.error(format("Проблема с чтением и записью файлов для страницы Инфляция. %s", e.getMessage()));
+                LOG.error(format("Error happened. %s", e.getMessage()));
                 e.printStackTrace();
             }
         }
         else {
-            LOG.info("Файла для страницы Инфляция не существует.");
+            LOG.info("No file for Inflation page.");
 //            System.out.println("Файла для страницы Инфляция не существует");
         }
     }

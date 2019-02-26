@@ -22,11 +22,11 @@ public class PrivateOutflow {
     public void makeMagic() {
         File file = FilesUtil.downloadFile(LINK);
         if (file == null) {
-            XlsxUtil.LOG.info("Файл для страницы Вывоз капитала частным сектором отсутствует.");
+            XlsxUtil.LOG.info("No file for Private Outflow.");
 //            System.out.println("Файл для Вывоза капитала частным сектором отсутствует.");
         }
         else {
-            XlsxUtil.LOG.debug("Редактирую страницу Вывоз капитала");
+            XlsxUtil.LOG.debug("Updating Private Outflow page");
 //            System.out.println("Редактирую страницу Вывоза капитала");
             butchFile(file);
         }
@@ -78,10 +78,10 @@ public class PrivateOutflow {
             FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
             wbMKR.write(mokruha);
             mokruha.close();
-            XlsxUtil.LOG.debug("Редактирование страницы Вывоз капитала частным сектором завершено.");
+            XlsxUtil.LOG.debug("Update is completed.");
 //            System.out.println("Редактирование страницы Вывод капитала частным сектором завершено");
         } catch (IOException e) {
-            XlsxUtil.LOG.error("Ошибка чтения-записи для страницы Вывоз капитала.");
+            XlsxUtil.LOG.error("Error happened.");
             e.printStackTrace();
         }
     }

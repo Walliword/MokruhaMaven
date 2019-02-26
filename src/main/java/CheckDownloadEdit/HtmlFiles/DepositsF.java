@@ -24,7 +24,7 @@ public class DepositsF {
 
 
     public void makeMagic() {
-        HtmlUtil.LOG.debug("Редактирую страницу Депозиты физиков..");
+        HtmlUtil.LOG.debug("Updating F deposits page..");
         try (FileInputStream mokruhaStream = new FileInputStream(new File(FilesUtil.MOKRUHA_ETERNAL))) {
             List<Double[]> data = HtmlUtil.getLinesOfNumbers(LINK_CURRENT, LINK_PREV, 17);
             if (data!= null) {
@@ -55,13 +55,13 @@ public class DepositsF {
                 FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                 wbMKR.write(mokruha);
                 mokruha.close();
-                HtmlUtil.LOG.debug("Редактирование страницы Депозиты физиков завершено.");
+                HtmlUtil.LOG.debug("Update is completed.");
             }
             else {
-                HtmlUtil.LOG.info("Данные для страницы Депозиты физиков отсутствуют.");
+                HtmlUtil.LOG.info("No data.");
             }
         } catch (IOException e) {
-            HtmlUtil.LOG.error("Ошибка при редактировании страницы Депозиты физиков.");
+            HtmlUtil.LOG.error("Error happened.");
             e.printStackTrace();
         }
     }

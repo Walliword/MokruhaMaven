@@ -18,10 +18,10 @@ public class PayBalance {
     public void makeMagic() {
         File file = FilesUtil.downloadFile(LINK);
         if (file == null) {
-            XlsxUtil.LOG.info("Файл для страницы Платежный баланс отсутствует.");
+            XlsxUtil.LOG.info("No file for Pay Balance.");
 //            System.out.println("Файл для страницы Платежный баланс отсутствует.");
         } else {
-            XlsxUtil.LOG.debug("Редактирую страницу Платежный баланс..");
+            XlsxUtil.LOG.debug("Updating Pay Balance page..");
 //            System.out.println("Редактирую страницу Платежный баланс");
             copyCells(file);
         }
@@ -41,7 +41,7 @@ public class PayBalance {
             Cell cellF = worksheetF.getRow(0).getCell(0);
             //проверка совпадений
             if (cellMKR.getStringCellValue().equals(cellF.getStringCellValue())) {
-                XlsxUtil.LOG.info("Изменений страницы Платёжный баланс не требуется.");
+                XlsxUtil.LOG.info("No changes needed.");
 //                System.out.println("Изменений страницы Платёжный баланс не требуется");
             } else {
                 cellMKR.setCellValue(cellF.getStringCellValue());
@@ -69,12 +69,12 @@ public class PayBalance {
                 FileOutputStream mokruha = new FileOutputStream(new File(FilesUtil.MOKRUHA_ETERNAL));
                 wbMKR.write(mokruha);
                 mokruha.close();
-                XlsxUtil.LOG.debug("Редактирование страницы Платёжный баланс завершено.");
+                XlsxUtil.LOG.debug("Update is completed.");
 //                System.out.println("Редактирование страницы Платёжный баланс завершено");
             }
 
         } catch (IOException e) {
-            XlsxUtil.LOG.error("Ошибка чтения-записи на странице Платёжный баланс.");
+            XlsxUtil.LOG.error("Error happened.");
             e.printStackTrace();
         }
     }

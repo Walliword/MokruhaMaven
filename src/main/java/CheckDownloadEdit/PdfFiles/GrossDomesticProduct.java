@@ -37,10 +37,10 @@ public class GrossDomesticProduct {
         List<String> check = PdfsUtil.getUrlStrings(months, FilesUtil.CURRENT_YEAR);
         pdfSize = check.size();
         if (check.size() == 0) {
-            PdfsUtil.LOG.info("Нет данных по ВВП для текущего года.");
+            PdfsUtil.LOG.info("No new data for GDP for this year.");
 //            System.out.println("Нет данных по ВВП для текущего года");
         } else {
-            PdfsUtil.LOG.debug("Обновляю страницу ВВП..");
+            PdfsUtil.LOG.debug("Updating GDP page..");
 //            System.out.println("Обновляю страницу ВВП..");
             File file = FilesUtil.downloadFile(check.get(pdfSize - 1));
             assert file != null;
@@ -73,10 +73,10 @@ public class GrossDomesticProduct {
                 wb.write(output_file);
                 output_file.close();
 
-                PdfsUtil.LOG.debug("Редактирование страницы ВВП завершено.");
+                PdfsUtil.LOG.debug("Update is completed.");
 //                System.out.println("Редактирование страницы ВВП завершено");
             } catch (IOException e) {
-                PdfsUtil.LOG.error("Ошибка при обновлении страницы ВВП.");
+                PdfsUtil.LOG.error("Error happened.");
                 e.printStackTrace();
             }
         }

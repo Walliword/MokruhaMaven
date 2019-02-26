@@ -14,21 +14,25 @@ public class Controller {
         new GrossDomesticProduct().makeMagic();
         new Inflation().makeMagic();
         new Demography().makeMagic();
+        Thread.sleep(3000);
         new Energy().makeMagic();
         new Income().makeMagic();
         new Debt().makeMagic();
+        Thread.sleep(3000);
         new Trade().makeMagic();
-        new Transport().makeMagic();
         new FNB().makeMagic();
         new PrivateOutflow().makeMagic();
+        Thread.sleep(3000);
+        new Transport().makeMagic();
         new PayBalance().makeMagic();
-        new Wage().makeMagic();
         new ExtTrade().makeMagic(); //необходимо редактировать после выхода первых данных по 19
+        Thread.sleep(3000);
+        new Wage().makeMagic();
         new DepositsF().makeMagic();
         new DepositsNonF().makeMagic();
         new Credits().makeMagic();
         new InflationStructure().makeMagic();
         Thread.sleep(1000);
-        FilesUtil.LOG.info("Работа со всеми страницами завершена.");
+        FilesUtil.LOG.info("All pages are done.");
     }
 }
